@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Site Builder Quest – CSS Lab</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="project.css">
+  <style>.back_top{display:none!important}</style>
+</head>
+<body>
+<div class="protect-me"><div class="clearfix">
+
+<header>
+  <div class="wrapper"><div class="header_con">
+    <div class="main_logo"><a href="index.html">CSS <span>Lab</span></a></div>
+    <div class="head_info">Capstone game</div>
+  </div></div>
+</header>
+
+<div id="nav_area"><div class="wrapper">
+  <button class="hamburger" type="button" aria-label="Toggle menu">&#9776; Menu</button>
+  <ul></ul>
+</div></div>
+
+<div id="main_area"><div class="wrapper">
+  <section class="card game_head">
+    <div class="ghead">
+      <div>
+        <h1>Site Builder Quest</h1>
+        <p class="sub">Build a real web page, one level at a time. No typing: pick the right CSS and watch the page come alive.</p>
+      </div>
+      <div class="gstats">
+        <div class="rank" id="rank"></div>
+        <div class="xpbar"><i id="xpfill"></i></div>
+        <div class="xptext" id="xptext"></div>
+      </div>
+    </div>
+    <div class="gmap" id="gmap"></div>
+    <div class="gtools">
+      <a class="btn" href="capstone-pro.html">Pro mode: type the CSS yourself</a>
+      <button class="btn" id="bRestart" type="button">Restart game</button>
+    </div>
+  </section>
+
+  <div class="game">
+    <section class="card g_prev">
+      <div class="pvwrap">
+        <div class="pvbtns"><button type="button" id="bPeek">Goal</button><button type="button" id="bZoom">Zoom out</button></div>
+        <div class="cap_prev" id="prev"><iframe id="frame" title="Your page" scrolling="no"></iframe></div>
+        <div class="pvtag" id="insp" hidden></div>
+      </div>
+    </section>
+    <section class="card g_card" id="gcard"></section>
+  </div>
+</div></div>
+
+<footer><div class="footer_btm"><div class="wrapper footer_btm_con">
+  <div class="copyright">&copy; CSS Lab</div>
+</div></div></footer>
+
+<span class="back_top" title="Back to top"></span>
+</div></div>
+
+<script src="script.js"></script>
+<script src="project.js"></script>
+<script>
+var RESET = `*,*:before,*:after{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;font-size:18px;line-height:22px;color:#333}
+a{text-decoration:none;transition:all .3s linear}
+img{max-width:100%;vertical-align:top}
+ul,h1,h2,h3,h4{margin:0;padding:0;list-style:none}
+strong,b{font-weight:bold}
+.main_con{outline:2px dashed #94a3b8;outline-offset:2px}`;
+
+var PAGE = `<div class="protect-me"><div class="clearfix">
+<header><div class="wrapper"><div class="header_con"><div class="main_logo">Company<b>Name</b></div></div></div></header>
+<div id="nav_area"><div class="wrapper"><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul></div></div>
+<div id="banner"><div class="wrapper"><h1>Welcome to our site</h1><p>A short banner message goes here.</p></div></div>
+<div id="middle"><div class="wrapper"><div class="middle_con"><div class="mid_box1"><h2>Sample Heading</h2><p>Short text for the first box.</p></div><div class="mid_box2"><h2>Sample Heading</h2><p>Short text for the second box.</p></div><div class="mid_box3"><h2>Sample Heading</h2><p>Short text for the third box.</p></div></div></div></div>
+<div id="main_area"><div class="wrapper"><div class="main_con clearfix"><div class="main_info"><p>First paragraph of the main content.</p><p>Second paragraph of the main content.</p><p>Third paragraph of the main content.</p><p>Fourth paragraph of the main content.</p></div><div class="main_side"><p>Sidebar content goes here.</p></div></div></div></div>
+<footer><div class="wrapper"><p>Copyright Company Name</p></div></footer>
+</div></div>`;
+
+var DESIGN_W = 640;
+
+/* Each level: code lines with {n} slots. A slot has options (o), the right answer(s) (a) and a tip. */
+var LEVELS = [
+  { t: 'Center the page', badge: 'Centered!', sel: '.wrapper',
+    bot: 'Our page is stuck to the edges. Let us put the content in a neat, centered box!',
+    learn: 'max-width limits the box, and margin: 0 auto centers it.',
+    code: ['.wrapper {', '  max-width: {0};', '  margin: {1};', '}'],
+    slots: [
+      { o: ['560px', '100%', '20px', 'auto'], a: '560px', tip: 'max-width limits how wide the box can grow, so there is room left over to center it.' },
+      { o: ['0 auto', 'auto 0', '0', '20px'], a: '0 auto', tip: 'margin: 0 auto means 0 on top and bottom, and automatic, equal space on the left and right.' } ],
+    test: function (d) { var r = d.querySelector('.wrapper').getBoundingClientRect(); return Math.abs(r.width - 560) < 2 && Math.abs(r.left - (d.documentElement.clientWidth - r.right)) < 2; } },
+
+  { t: 'Color the banner', badge: 'Gradient Guru', sel: '#banner',
+    bot: 'The banner looks plain. Time for a colorful gradient and text you can actually read.',
+    learn: 'A gradient is an image, so it goes in background (or background-image).',
+    code: ['#banner {', '  padding: 50px 0;', '  color: {0};', '  background: {1};', '}'],
+    slots: [
+      { o: ['#fff', '#333', 'red', 'yellow'], a: '#fff', tip: 'Light text is easy to read on a dark gradient.' },
+      { o: ['linear-gradient(135deg, #4f46e5, #06b6d4)', '#fff', 'none', 'blue'], a: 'linear-gradient(135deg, #4f46e5, #06b6d4)', tip: 'A gradient is an image, so it goes in background. The plain colors are not gradients.' } ],
+    test: function (d, w) { return /gradient|url\(/.test(w.getComputedStyle(d.querySelector('#banner')).backgroundImage); } },
+
+  { t: 'Three boxes in a row', badge: 'Row Master', sel: '.mid_box1,.mid_box2,.mid_box3', cam: '.mid_box1',
+    bot: 'These three boxes are stacked like pancakes. Let us line them up in a row!',
+    learn: 'inline-block + vertical-align: top + 32% gives three even boxes in a row.',
+    code: ['[class*="mid_box"] {', '  display: {0};', '  vertical-align: {1};', '  width: {2};', '}'],
+    slots: [
+      { o: ['inline-block', 'block', 'flex', 'none'], a: 'inline-block', tip: 'inline-block puts boxes side by side and keeps their width.' },
+      { o: ['top', 'middle', 'baseline', 'bottom'], a: 'top', tip: 'The rule for inline-block boxes: always vertical-align: top.' },
+      { o: ['32%', '100%', '50%', '24%'], a: '32%', tip: 'Three boxes use 32% each (two boxes use 47%, four use 24%) so they fit with a little room.' } ],
+    test: function (d) { var b = ['.mid_box1', '.mid_box2', '.mid_box3'].map(function (s) { return d.querySelector(s).getBoundingClientRect(); }); return Math.abs(b[0].top - b[1].top) < 2 && Math.abs(b[1].top - b[2].top) < 2 && b[0].left < b[1].left && b[1].left < b[2].left; } },
+
+  { t: 'Hang an icon on each heading', badge: 'Icon Designer', sel: '.middle_con h2', cam: '.mid_box1',
+    bot: 'Each heading needs an icon on top. We will hang a circle above it using absolute positioning.',
+    learn: 'The parent is position: relative. The icon (:before) is position: absolute.',
+    code: ['.middle_con h2 {', '  position: {0};', '  padding-top: 70px;', '  text-align: center;', '}', '.middle_con h2:before {', '  content: "";', '  position: {1};', '  top: 0;', '  left: 0;', '  right: 0;', '  margin: 0 auto;', '  width: 57px;', '  height: 57px;', '  border-radius: 50%;', '  background: #4f46e5;', '}'],
+    slots: [
+      { o: ['relative', 'absolute', 'static', 'fixed'], a: 'relative', tip: 'The heading is the parent, so it needs position: relative. Then the icon can be placed inside it.' },
+      { o: ['absolute', 'relative', 'static', 'fixed'], a: 'absolute', tip: 'The icon floats freely at top, left and right inside its parent, so it is absolute.' } ],
+    test: function (d, w) { var h = d.querySelector('.middle_con h2'), cs = w.getComputedStyle(h), b = w.getComputedStyle(h, '::before'); return cs.position === 'relative' && b.position === 'absolute' && b.content !== 'none' && b.content !== 'normal' && parseFloat(b.width) > 0 && parseFloat(b.height) > 0; } },
+
+  { t: 'Content and sidebar', badge: 'Float Pilot', sel: '.main_info,.main_side', cam: '.main_con',
+    bot: 'Let us split the content: main text on the right, sidebar on the left.',
+    learn: 'float: left or right plus a % width makes columns.',
+    code: ['.main_info {', '  float: {0};', '  width: 68%;', '}', '.main_side {', '  float: {1};', '  width: 28%;', '}'],
+    slots: [
+      { o: ['right', 'left', 'none', 'center'], a: 'right', tip: 'The main content goes on the right.' },
+      { o: ['left', 'right', 'none', 'center'], a: 'left', tip: 'The sidebar goes on the left, opposite the main content.' } ],
+    test: function (d, w) { var a = w.getComputedStyle(d.querySelector('.main_info')).getPropertyValue('float'), b = w.getComputedStyle(d.querySelector('.main_side')).getPropertyValue('float'); return a !== 'none' && b !== 'none' && a !== b; } },
+
+  { t: 'Rescue the footer', badge: 'Clearfix Cleaner', sel: '.main_con', cam: '.main_con',
+    bot: 'Oh no, the footer crawled up over the content! Floats leave their parent behind. A clearfix brings it back.',
+    learn: 'A clearfix (:before and :after with clear: both) makes a parent wrap its floated children.',
+    code: ['.clearfix:before,', '.clearfix:after {', '  content: {0};', '  display: {1};', '  clear: {2};', '}'],
+    slots: [
+      { o: ['""', 'none', '"x"', 'auto'], a: '""', tip: 'A pseudo-element needs the content property, even if it is just empty quotes.' },
+      { o: ['table', 'block', 'inline', 'none'], a: 'table', tip: 'display: table makes the pseudo-elements take their own row.' },
+      { o: ['both', 'left', 'none', 'float'], a: 'both', tip: 'clear: both pushes below floats on both sides, so the parent wraps them.' } ],
+    test: function (d, w) { var m = d.querySelector('.main_con').offsetHeight, i = d.querySelector('.main_info'), s = d.querySelector('.main_side'); return w.getComputedStyle(i).getPropertyValue('float') !== 'none' && m > 0 && m >= Math.max(i.offsetHeight, s.offsetHeight); } },
+
+  { t: 'Turn the menu sideways', badge: 'Menu Maker', sel: '#nav_area li', cam: '#nav_area',
+    bot: 'The menu is a tall list. Let us turn it into a row.',
+    learn: 'inline-block + vertical-align: top puts list items in a row.',
+    code: ['#nav_area {', '  background: #1d2433;', '}', '#nav_area li {', '  display: {0};', '  vertical-align: {1};', '}', '#nav_area a {', '  display: block;', '  padding: 12px 14px;', '  color: #fff;', '}'],
+    slots: [
+      { o: ['inline-block', 'block', 'table', 'none'], a: 'inline-block', tip: 'inline-block lays the items out in a row.' },
+      { o: ['top', 'bottom', 'middle', 'baseline'], a: 'top', tip: 'vertical-align: top keeps every item lined up at the top.' } ],
+    test: function (d, w) { var li = d.querySelector('#nav_area li'), cs = w.getComputedStyle(li), ul = w.getComputedStyle(li.parentElement); return (cs.display === 'inline-block' && cs.verticalAlign === 'top') || ul.display === 'flex'; } },
+
+  { t: 'Stripe the paragraphs', badge: 'Zebra Striper', sel: '.main_info p', cam: '.main_info',
+    bot: 'Long text is hard to scan. Let us stripe every other paragraph!',
+    learn: ':nth-child(odd) styles the 1st, 3rd, 5th... element.',
+    code: ['.main_info p:nth-child({0}) {', '  background: {1};', '}'],
+    slots: [
+      { o: ['odd', 'even', '1', '3n'], a: ['odd', 'even'], tip: 'odd picks the 1st, 3rd, 5th paragraph (even also works: 2nd, 4th).' },
+      { o: ['#eef2ff', 'transparent', '#fff', 'none'], a: '#eef2ff', tip: 'A light tint makes the stripes visible. White or transparent would hide them.' } ],
+    test: function (d, w) { var p = d.querySelectorAll('.main_info p'); return w.getComputedStyle(p[0]).backgroundColor !== w.getComputedStyle(p[1]).backgroundColor; } },
+
+  { t: 'Shout in the footer', badge: 'Capital Hero', sel: 'footer p', cam: 'footer',
+    bot: 'Last level! Make the footer text shout in capital letters, without retyping it.',
+    learn: 'text-transform changes capitalization without touching the HTML.',
+    code: ['footer {', '  padding: 20px 0;', '  text-transform: {0};', '}'],
+    slots: [
+      { o: ['uppercase', 'lowercase', 'capitalize', 'none'], a: 'uppercase', tip: 'uppercase turns every letter into a capital.' } ],
+    test: function (d, w) { return w.getComputedStyle(d.querySelector('footer p')).textTransform === 'uppercase'; } }
+];
+
+function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; }
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function okVal(s, v) { return [].concat(s.a).indexOf(v) > -1; }
+function ansOf(s) { return [].concat(s.a)[0]; }
+function cssFor(L, vals) {
+  return L.code.map(function (line) {
+    var skip = false;
+    var out = line.replace(/\{(\d)\}/g, function (_, n) { var v = vals[+n]; if (v == null) { skip = true; return ''; } return v; });
+    return skip ? null : out;
+  }).filter(function (x) { return x !== null; }).join('\n');
+}
+function goalCss() { return LEVELS.map(function (L) { return cssFor(L, L.slots.map(ansOf)); }).join('\n'); }
+
+var frame = document.getElementById('frame'), prevBox = document.getElementById('prev'), insp = document.getElementById('insp'), card = document.getElementById('gcard');
+var state, cur = 0, picks = [], active = 0, wrong = [], hinted = {}, mistakes = 0, hintN = 0, msg = null, shuf = [], peek = false, full = false, showFinal = false;
+
+function load() { try { var s = JSON.parse(localStorage.getItem('csslab-game')); if (s && s.done && s.done.length === LEVELS.length) return s; } catch (e) {} return { done: LEVELS.map(function () { return false; }), stars: LEVELS.map(function () { return 0; }) }; }
+function save() { try { localStorage.setItem('csslab-game', JSON.stringify(state)); if (state.done.every(Boolean)) localStorage.setItem('csslab-capstone', 'true'); } catch (e) {} }
+function firstUndone() { return state.done.indexOf(false); }
+function doc() { try { return frame.contentDocument; } catch (e) { return null; } }
+
+function allCss() {
+  if (peek) return goalCss();
+  return LEVELS.map(function (L, i) {
+    if (state.done[i]) return cssFor(L, L.slots.map(ansOf));
+    if (i === cur) return cssFor(L, picks);
+    return '';
+  }).join('\n');
+}
+
+function fit() {
+  var d = doc(); if (!d || !d.documentElement || !d.body) return;
+  var L = LEVELS[cur], h = d.documentElement.scrollHeight, s = Math.min(1, prevBox.clientWidth / DESIGN_W);
+  var fullH = Math.ceil(h * s), mobile = window.innerWidth <= 860, boxH = full ? fullH : Math.min(fullH, mobile ? 230 : 440), y = 0;
+  if (!full && !peek) {
+    var t = d.querySelector(L.cam || L.sel);
+    if (t) y = Math.max(0, Math.min(fullH - boxH, t.getBoundingClientRect().top * s - 18));
+  }
+  frame.style.height = h + 'px';
+  frame.style.transform = 'translateY(' + (-y) + 'px) scale(' + s + ')';
+  prevBox.style.height = boxH + 'px';
+}
+
+function applyCss() {
+  var d = doc(); if (!d || !d.querySelector('#u')) return;
+  d.querySelector('#u').textContent = allCss();
+  d.querySelector('#h').textContent = (peek ? '' : LEVELS[cur].sel + '{outline:3px dashed #f59e0b!important;outline-offset:2px}') + '[data-tap]{outline:3px solid #ec4899!important;outline-offset:-3px}';
+  fit();
+  setTimeout(fit, 60);
+}
+
+function confetti() {
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cols = ['#6366f1', '#22d3ee', '#f59e0b', '#ec4899', '#10b981'];
+  for (var i = 0; i < 50; i++) {
+    var c = el('i', 'confetti');
+    c.style.left = (window.innerWidth / 2) + 'px'; c.style.top = (window.innerHeight * 0.4) + 'px';
+    c.style.background = cols[i % 5];
+    c.style.setProperty('--dx', (Math.random() * 520 - 260) + 'px');
+    c.style.setProperty('--dy', (-80 - Math.random() * 240) + 'px');
+    c.style.setProperty('--r', (Math.random() * 360) + 'deg');
+    document.body.appendChild(c);
+    (function (n) { setTimeout(function () { n.remove(); }, 1500); })(c);
+  }
+}
+
+function slotLabel(n) {
+  var re = new RegExp('([a-z-]+):\\s*\\{' + n + '\\}'), L = LEVELS[cur];
+  for (var i = 0; i < L.code.length; i++) { var m = re.exec(L.code[i]); if (m) return m[1]; if (L.code[i].indexOf('nth-child({' + n + '})') > -1) return 'nth-child'; }
+  return 'this slot';
+}
+function starsText(n) { return '\u2605\u2605\u2605'.slice(0, n) + '\u2606\u2606\u2606'.slice(0, 3 - n); }
+function rankName(n) { return n >= 9 ? 'Master Builder' : n >= 6 ? 'Architect' : n >= 3 ? 'Builder' : 'Rookie'; }
+
+function renderHead() {
+  var done = state.done.filter(Boolean).length, stars = state.stars.reduce(function (a, b) { return a + b; }, 0);
+  document.getElementById('rank').textContent = 'Rank: ' + rankName(done);
+  document.getElementById('xpfill').style.width = Math.round(done / LEVELS.length * 100) + '%';
+  document.getElementById('xptext').textContent = done + ' of ' + LEVELS.length + ' levels  \u00b7  \u2605 ' + stars + ' / ' + LEVELS.length * 3;
+  var map = document.getElementById('gmap'), fu = firstUndone(), maxOpen = fu < 0 ? LEVELS.length - 1 : fu;
+  map.textContent = '';
+  LEVELS.forEach(function (L, i) {
+    var b = el('button', 'node' + (state.done[i] ? ' done' : '') + (i === cur && !showFinal ? ' cur' : ''), state.done[i] ? '\u2713' : String(i + 1));
+    b.type = 'button'; b.disabled = i > maxOpen; b.title = L.t; b.setAttribute('aria-label', 'Level ' + (i + 1) + ': ' + L.t);
+    if (state.done[i]) b.appendChild(el('small', '', starsText(state.stars[i])));
+    b.addEventListener('click', function () { startLevel(i); });
+    map.appendChild(b);
+  });
+}
+
+function startLevel(i) {
+  cur = i; showFinal = false; picks = LEVELS[i].slots.map(function () { return null; }); active = 0; wrong = []; hinted = {}; mistakes = 0; hintN = 0; msg = null; peek = false;
+  shuf = LEVELS[i].slots.map(function (s) { return shuffle(s.o); });
+  document.getElementById('bPeek').classList.remove('on'); document.getElementById('bPeek').textContent = 'Goal';
+  renderAll();
+}
+
+function renderAll() { renderHead(); renderCard(); applyCss(); }
+
+function nextEmpty(from) { for (var k = 1; k <= picks.length; k++) { var j = (from + k) % picks.length; if (picks[j] == null) return j; } return from; }
+
+function renderCard() {
+  card.textContent = '';
+  if (showFinal) return renderFinal();
+  var L = LEVELS[cur], solved = state.done[cur];
+  var top = el('div', 'gtop'); top.appendChild(el('span', 'step_chip', 'Level ' + (cur + 1) + ' of ' + LEVELS.length));
+  if (solved) top.appendChild(el('span', 'gstars', starsText(state.stars[cur])));
+  card.appendChild(top);
+  card.appendChild(el('h3', 'gtitle', L.t));
+  var bl = el('div', 'botline'); bl.appendChild(el('span', 'botav', '</>')); bl.appendChild(el('p', 'bubble', L.bot)); card.appendChild(bl);
+
+  var cb = el('div', 'codebox');
+  L.code.forEach(function (line) {
+    var d = el('div', 'cl'), has = false;
+    line.split(/(\{\d\})/).forEach(function (p) {
+      var m = /^\{(\d)\}$/.exec(p);
+      if (m) {
+        has = true; var n = +m[1];
+        var b = el('button', 'slot' + (picks[n] != null || solved ? ' has' : '') + (n === active && !solved ? ' act' : '') + (wrong.indexOf(n) > -1 ? ' bad' : '') + (solved ? ' good' : ''), solved ? ansOf(L.slots[n]) : (picks[n] != null ? picks[n] : '?'));
+        b.type = 'button'; b.disabled = solved; b.setAttribute('aria-label', 'Choose a value for ' + slotLabel(n));
+        b.addEventListener('click', function () { active = n; renderCard(); });
+        d.appendChild(b);
+      } else d.appendChild(document.createTextNode(p));
+    });
+    if (!has) d.className += ' fixed';
+    cb.appendChild(d);
+  });
+  card.appendChild(cb);
+  if (!solved) card.appendChild(el('p', 'cbnote', 'Grey lines are already written for you. Fill the gold slots.'));
+
+  if (!solved) {
+    var pk = el('div', 'picker');
+    pk.appendChild(el('div', 'lab', 'Pick a value for ' + slotLabel(active) + ':'));
+    var os = el('div', 'opts');
+    shuf[active].forEach(function (v) {
+      var b = el('button', 'opt' + (picks[active] === v ? ' sel' : ''), v); b.type = 'button';
+      b.addEventListener('click', function () { picks[active] = v; wrong = []; msg = null; active = nextEmpty(active); renderCard(); applyCss(); });
+      os.appendChild(b);
+    });
+    pk.appendChild(os); card.appendChild(pk);
+  }
+
+  if (msg) { var m = el('div', 'gmsg ' + msg.k); msg.lines.forEach(function (t, i) { m.appendChild(el('div', '', t)); }); card.appendChild(m); }
+
+  var acts = el('div', 'gactions');
+  if (!solved) {
+    var bH = el('button', 'btn', 'Hint'), bL = el('button', 'btn primary', 'Lock it in');
+    bH.type = 'button'; bL.type = 'button';
+    var ready = picks.every(function (p) { return p != null; }); bL.disabled = !ready; if (ready) bL.className += ' pulse-btn';
+    bH.addEventListener('click', function () { if (!hinted[active]) { hinted[active] = true; hintN++; } msg = { k: 'hint', lines: ['Hint: ' + L.slots[active].tip] }; renderCard(); });
+    bL.addEventListener('click', lockIn);
+    acts.appendChild(bH); acts.appendChild(bL);
+  } else {
+    var bN = el('button', 'btn primary', cur < LEVELS.length - 1 ? 'Next level' : 'Finish the quest'); bN.type = 'button';
+    bN.addEventListener('click', function () { if (cur < LEVELS.length - 1) startLevel(Math.min(cur + 1, firstUndone() < 0 ? cur + 1 : firstUndone())); else { showFinal = true; renderAll(); } });
+    acts.appendChild(bN);
+  }
+  card.appendChild(acts);
+  if (solved) {
+    var g = el('div', 'gmsg good'); g.appendChild(el('div', '', 'Badge: ' + L.badge)); g.appendChild(el('div', '', 'You learned: ' + L.learn)); card.insertBefore(g, acts);
+  }
+}
+
+function lockIn() {
+  var L = LEVELS[cur];
+  var bad = []; L.slots.forEach(function (s, i) { if (!okVal(s, picks[i])) bad.push(i); });
+  if (bad.length) {
+    mistakes++; wrong = bad;
+    msg = { k: 'bad', lines: ['Not quite. Look at the page and fix the red slot' + (bad.length > 1 ? 's' : '') + ':'].concat(bad.map(function (i) { return '\u2022 ' + L.slots[i].tip; })) };
+    renderCard(); return;
+  }
+  state.done[cur] = true; state.stars[cur] = Math.max(1, 3 - Math.min(2, mistakes + hintN)); save();
+  wrong = []; msg = null; confetti(); renderAll();
+}
+
+function renderFinal() {
+  var stars = state.stars.reduce(function (a, b) { return a + b; }, 0);
+  card.appendChild(el('span', 'step_chip', 'Quest complete'));
+  card.appendChild(el('h3', 'gtitle', 'You built the whole page!'));
+  card.appendChild(el('p', 'bubble', 'Every part of the page is now styled with CSS you chose yourself. Rank: ' + rankName(LEVELS.length) + '.'));
+  card.appendChild(el('div', 'bigstars', '\u2605 ' + stars + ' / ' + LEVELS.length * 3));
+  var bs = el('div', 'badges');
+  LEVELS.forEach(function (L, i) { bs.appendChild(el('span', 'badgechip', L.badge + ' ' + starsText(state.stars[i]))); });
+  card.appendChild(bs);
+  var acts = el('div', 'gactions');
+  var bC = el('button', 'btn primary', 'Copy my CSS'), bR = el('button', 'btn', 'Play again'), aP = el('a', 'btn', 'Try Pro mode (typing)');
+  bC.type = 'button'; bR.type = 'button'; aP.href = 'capstone-pro.html';
+  bC.addEventListener('click', function () {
+    var t = goalCss(), ok = function () { bC.textContent = 'Copied!'; setTimeout(function () { bC.textContent = 'Copy my CSS'; }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, function () {}); 
+  });
+  bR.addEventListener('click', restart);
+  [bC, bR, aP].forEach(function (b) { acts.appendChild(b); });
+  card.appendChild(acts);
+}
+
+function restart() {
+  if (!confirm('Restart the game? Your stars will be cleared.')) return;
+  state = { done: LEVELS.map(function () { return false; }), stars: LEVELS.map(function () { return 0; }) }; save();
+  try { localStorage.removeItem('csslab-capstone'); } catch (e) {}
+  startLevel(0);
+}
+
+function inspect(t) {
+  var d = doc(), w = frame.contentWindow;
+  d.querySelectorAll('[data-tap]').forEach(function (x) { x.removeAttribute('data-tap'); });
+  t.setAttribute('data-tap', '1');
+  var cs = w.getComputedStyle(t), name = t.tagName.toLowerCase() + (t.id ? '#' + t.id : '') + (typeof t.className === 'string' && t.className.trim() ? '.' + t.className.trim().split(/\s+/).join('.') : '');
+  insp.hidden = false;
+  insp.textContent = name + '\ndisplay: ' + cs.display + ' \u00b7 position: ' + cs.position + ' \u00b7 float: ' + cs.getPropertyValue('float') + ' \u00b7 width: ' + Math.round(parseFloat(cs.width)) + 'px';
+}
+
+frame.addEventListener('load', function () {
+  var d = doc(); if (!d) return;
+  d.addEventListener('click', function (e) { e.preventDefault(); inspect(e.target); }, true);
+  state = state || load();
+  var fu = firstUndone();
+  if (fu < 0) { showFinal = true; cur = LEVELS.length - 1; renderAll(); } else startLevel(fu);
+});
+state = load();
+frame.srcdoc = '<!DOCTYPE html><html><head><meta charset="utf-8"><style>' + RESET + '</style><style id="u"></style><style id="h"></style></head><body>' + PAGE + '</body></html>';
+
+document.getElementById('bPeek').addEventListener('click', function () { peek = !peek; this.classList.toggle('on', peek); this.textContent = peek ? 'My page' : 'Goal'; applyCss(); });
+document.getElementById('bZoom').addEventListener('click', function () { full = !full; this.textContent = full ? 'Focus' : 'Zoom out'; fit(); });
+document.getElementById('bRestart').addEventListener('click', restart);
+window.addEventListener('resize', fit);
+</script>
+</body>
+</html>

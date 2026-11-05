@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz – CSS Lab</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+<div class="protect-me"><div class="clearfix">
+
+<header>
+  <div class="wrapper"><div class="header_con">
+    <div class="main_logo"><a href="index.html">CSS <span>Lab</span></a></div>
+    <div class="head_info">Quiz</div>
+  </div></div>
+</header>
+
+<div id="nav_area"><div class="wrapper">
+  <button class="hamburger" type="button" aria-label="Toggle menu">&#9776; Menu</button>
+  <ul></ul>
+</div></div>
+
+<div id="main_area"><div class="wrapper">
+  <section class="card">
+    <h1>Test yourself</h1>
+    <p>10 questions on the rules from the lessons. Your best score is saved in this browser.</p>
+    <div id="quiz"></div>
+  </section>
+</div></div>
+
+<footer><div class="footer_btm"><div class="wrapper footer_btm_con">
+  <div class="copyright">&copy; CSS Lab</div>
+</div></div></footer>
+
+<span class="back_top" title="Back to top"></span>
+</div></div>
+
+<script src="script.js"></script>
+<script src="project.js"></script>
+<script>
+var Q = [
+  [`Which is NOT one of the three ways to apply CSS?`, [`Inline style attribute`, `Internal <style> tag`, `External .css file`, `Embedded <css> tag`], 3, `The three ways are inline, internal and external. There is no <css> tag.`],
+  [`What does the "a" in rgba() stand for?`, [`Alpha, the opacity`, `Area`, `Angle`, `Absolute`], 0, `Alpha is opacity from 0 (invisible) to 1 (solid).`],
+  [`In background: url('bg.jpg') no-repeat center top #000; what does top set?`, [`Horizontal position`, `Vertical position`, `Image repeat`, `Image size`], 1, `center is the horizontal position and top is the vertical position.`],
+  [`padding: 20px 15px 0; What is the bottom padding?`, [`20px`, `15px`, `0`, `35px`], 2, `Three values mean top, left and right, bottom.`],
+  [`Three balanced inline-block boxes in a row: which width fits?`, [`50%`, `47%`, `32%`, `24%`], 2, `2 boxes use 47%, 3 boxes 32%, 4 boxes 24%. Add vertical-align: top too.`],
+  [`How do you cancel a float for a mobile layout?`, [`float: reset;`, `float: none;`, `clear: float;`, `float: off;`], 1, `float: none resets it.`],
+  [`An absolute ::before icon needs which declaration on its parent?`, [`display: flex`, `position: relative`, `float: left`, `overflow: hidden`], 1, `The parent must be positioned (usually relative) so the icon is placed inside it.`],
+  [`Which selector matches every element whose class contains mid_box?`, [`.mid_box`, `#mid_box`, `[class*="mid_box"]`, `mid_box:all`], 2, `The *= attribute selector matches mid_box1, mid_box2 and so on.`],
+  [`Why does z-index do nothing on a static element?`, [`It only works on positioned elements`, `z-index needs px units`, `It only works on images`, `It needs display: flex`], 0, `Give the element position: relative or absolute first. Values have no unit.`],
+  [`Which declaration turns a square box into a circle?`, [`border-radius: 50%`, `border: round`, `display: circle`, `radius: 100`], 0, `border-radius: 50% rounds all corners into a circle on a square.`]
+];
+
+var i = 0, score = 0, box = document.getElementById('quiz');
+
+function show() {
+  box.innerHTML = '';
+  if (i >= Q.length) return finish();
+  var q = Q[i];
+
+  var h = document.createElement('h3');
+  h.textContent = (i + 1) + '/' + Q.length + '. ' + q[0];
+  box.appendChild(h);
+
+  var why = document.createElement('p');
+  why.className = 'why';
+
+  var next = document.createElement('button');
+  next.className = 'btn primary';
+  next.textContent = i < Q.length - 1 ? 'Next' : 'See score';
+  next.hidden = true;
+  next.onclick = function () { i++; show(); };
+
+  var bs = [];
+  q[1].map(function (t, n) { return { t: t, ok: n === q[2] }; })
+    .sort(function () { return Math.random() - 0.5; })
+    .forEach(function (o) {
+      var b = document.createElement('button');
+      b.className = 'q_opt';
+      b.textContent = o.t;
+      b.onclick = function () {
+        bs.forEach(function (x) { x.b.disabled = true; if (x.o.ok) x.b.classList.add('right'); });
+        if (o.ok) score++; else b.classList.add('wrong');
+        why.textContent = q[3];
+        next.hidden = false;
+      };
+      bs.push({ b: b, o: o });
+      box.appendChild(b);
+    });
+
+  box.appendChild(why);
+  box.appendChild(next);
+}
+
+function finish() {
+  var best = score;
+  try {
+    best = Math.max(score, Number(localStorage.getItem('csslab-best')) || 0);
+    localStorage.setItem('csslab-best', best);
+  } catch (e) {}
+  box.innerHTML = '<div class="score">' + score + ' / ' + Q.length + '</div>' +
+    '<p>Best score: ' + best + ' / ' + Q.length + '</p>' +
+    '<button class="btn primary" id="retry">Try again</button> ' +
+    '<a class="btn" href="index.html">Back to lessons</a>';
+  document.getElementById('retry').onclick = function () { i = 0; score = 0; show(); };
+}
+
+show();
+</script>
+</body>
+</html>

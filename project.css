@@ -1,0 +1,29 @@
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px;margin:0 auto;max-width:820px}
+.card h1{margin:0 0 6px}
+.card > p{color:var(--muted)}
+#nav_area a[aria-current]{background:var(--brand)}
+
+/* Progress */
+.progress{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin:6px 0}
+.progress_bar{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--brand2));transition:width .3s}
+.progress_txt{display:block;margin-bottom:10px;color:var(--muted)}
+.sidebar a.done::after{content:" \2713";color:#16a34a}
+.done_btn,.btn{margin-top:14px;padding:8px 18px;border:1px solid var(--brand);background:#fff;color:var(--brand);border-radius:20px;cursor:pointer;font:600 .9rem system-ui,sans-serif}
+.lesson.done{border-left:4px solid #16a34a}
+.lesson.done .done_btn,.btn.primary{background:var(--brand);color:#fff}
+
+/* Quiz */
+.q_opt{display:block;width:100%;text-align:left;margin:8px 0;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer;font:inherit;color:var(--ink)}
+.q_opt:hover:not(:disabled){border-color:var(--brand)}
+.q_opt.right{background:#dcfce7;border-color:#16a34a}
+.q_opt.wrong{background:#fee2e2;border-color:#ef4444}
+.why{margin:10px 0;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;color:var(--brand);margin:6px 0}
+
+/* Cheatsheet */
+.search{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font:inherit;margin:8px 0 14px}
+.cheat{width:100%;border-collapse:collapse}
+.cheat th,.cheat td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:.9rem}
+.cheat th{background:#eef0ff}
+.cheat tr[hidden]{display:none}
+@media (max-width:860px){.cheat{display:block;overflow-x:auto}}

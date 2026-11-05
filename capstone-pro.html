@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Capstone Pro – CSS Lab</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+<div class="protect-me"><div class="clearfix">
+
+<header>
+  <div class="wrapper"><div class="header_con">
+    <div class="main_logo"><a href="index.html">CSS <span>Lab</span></a></div>
+    <div class="head_info">Pro mode</div>
+  </div></div>
+</header>
+
+<div id="nav_area"><div class="wrapper">
+  <button class="hamburger" type="button" aria-label="Toggle menu">&#9776; Menu</button>
+  <ul></ul>
+</div></div>
+
+<div id="main_area"><div class="wrapper">
+  <section class="card" style="max-width:1100px;margin:0 auto 18px">
+    <h1>Capstone Pro: type the CSS yourself</h1>
+    <p><a href="capstone.html">Back to the game</a> if you want a guided version without typing.</p>
+    <p>The page below has no styling yet. Fix it in 9 small steps. Each step outlines the part of the page you are styling. Tap any part of the preview to see its class and CSS.</p>
+    <span class="counter" id="count"></span>
+    <div class="dots" id="dots"></div>
+  </section>
+
+  <div class="cap2">
+    <section class="card cap_step" id="stepcard"></section>
+
+    <section class="card cap_prevcard">
+      <h3>Live preview</h3>
+      <div class="cap_prev" id="prev"><iframe id="frame" title="Page preview" scrolling="no"></iframe></div>
+      <div class="insp" id="insp">Tap any part of the preview to see its class and CSS.</div>
+      <details class="structure">
+        <summary>Page structure (class names)</summary>
+        <pre class="code">header
+  .wrapper &gt; .header_con &gt; .main_logo
+#nav_area &gt; .wrapper &gt; ul &gt; li (x5) &gt; a
+#banner &gt; .wrapper &gt; h1, p
+#middle &gt; .wrapper &gt; .middle_con
+  .mid_box1, .mid_box2, .mid_box3
+    each: h2, p
+#main_area &gt; .wrapper &gt; .main_con.clearfix
+  .main_info &gt; p (x4)
+  .main_side &gt; p
+footer &gt; .wrapper &gt; p</pre>
+      </details>
+    </section>
+
+    <section class="card cap_edit">
+      <h3>Your CSS</h3>
+      <div id="tokenslot"></div>
+      <textarea id="css" class="cap_css" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Your CSS"></textarea>
+      <div class="chal_actions">
+        <button class="btn primary" id="bSee" type="button">See preview</button>
+        <button class="btn" id="bCopy" type="button">Copy my CSS</button>
+        <button class="btn" id="bClear" type="button">Clear</button>
+      </div>
+    </section>
+  </div>
+</div></div>
+
+<footer><div class="footer_btm"><div class="wrapper footer_btm_con">
+  <div class="copyright">&copy; CSS Lab</div>
+</div></div></footer>
+
+<span class="back_top" title="Back to top"></span>
+</div></div>
+
+<script src="script.js"></script>
+<script src="project.js"></script>
+<script>
+var RESET = `*,*:before,*:after{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;font-size:18px;line-height:22px;color:#333}
+a{text-decoration:none;transition:all .3s linear}
+img{max-width:100%;vertical-align:top}
+ul,h1,h2,h3,h4{margin:0;padding:0;list-style:none}
+strong,b{font-weight:bold}`;
+
+var PAGE = `<div class="protect-me"><div class="clearfix">
+<header><div class="wrapper"><div class="header_con"><div class="main_logo">Company<b>Name</b></div></div></div></header>
+<div id="nav_area"><div class="wrapper"><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul></div></div>
+<div id="banner"><div class="wrapper"><h1>Welcome to our site</h1><p>A short banner message goes here.</p></div></div>
+<div id="middle"><div class="wrapper"><div class="middle_con"><div class="mid_box1"><h2>Sample Heading</h2><p>Short text for the first box.</p></div><div class="mid_box2"><h2>Sample Heading</h2><p>Short text for the second box.</p></div><div class="mid_box3"><h2>Sample Heading</h2><p>Short text for the third box.</p></div></div></div></div>
+<div id="main_area"><div class="wrapper"><div class="main_con clearfix"><div class="main_info"><p>First paragraph of the main content.</p><p>Second paragraph of the main content.</p><p>Third paragraph of the main content.</p><p>Fourth paragraph of the main content.</p></div><div class="main_side"><p>Sidebar content goes here.</p></div></div></div></div>
+<footer><div class="wrapper"><p>Copyright Company Name</p></div></footer>
+</div></div>`;
+
+var DESIGN_W = 640;
+
+var STEPS = [
+  { t: 'Center the page', sel: '.wrapper',
+    goal: 'Every section keeps its content inside a .wrapper box. Make the wrapper 560px wide and centered.',
+    hint: 'max-width limits the width. margin: 0 auto centers a block that has a width.',
+    starter: `.wrapper {\n  max-width: ___px;\n  margin: ___;\n}`,
+    ans: `.wrapper {\n  max-width: 560px;\n  margin: 0 auto;\n}`,
+    test: function (d) { var r = d.querySelector('.wrapper').getBoundingClientRect(); return Math.abs(r.width - 560) < 2 && Math.abs(r.left - (d.documentElement.clientWidth - r.right)) < 2; } },
+
+  { t: 'Color the banner', sel: '#banner',
+    goal: 'Give the banner a gradient background with white text.',
+    hint: 'A gradient goes in background (or background-image): linear-gradient(135deg, #4f46e5, #06b6d4).',
+    starter: `#banner {\n  padding: 50px 0;\n  color: ___;\n  background: ___;\n}`,
+    ans: `#banner {\n  padding: 50px 0;\n  color: #fff;\n  background: linear-gradient(135deg, #4f46e5, #06b6d4);\n}`,
+    test: function (d, w) { return /gradient|url\(/.test(w.getComputedStyle(d.querySelector('#banner')).backgroundImage); } },
+
+  { t: 'Put the three boxes in a row', sel: '.mid_box1,.mid_box2,.mid_box3',
+    goal: 'The three boxes are stacked. Use the inline-block rule: display inline-block, vertical-align top, and the width for 3 boxes (32%).',
+    hint: '[class*="mid_box"] matches all three boxes at once. 3 boxes use width: 32%.',
+    starter: `[class*="mid_box"] {\n  display: ___;\n  vertical-align: ___;\n  width: ___%;\n}`,
+    ans: `[class*="mid_box"] {\n  display: inline-block;\n  vertical-align: top;\n  width: 32%;\n}`,
+    test: function (d) { var b = ['.mid_box1', '.mid_box2', '.mid_box3'].map(function (s) { return d.querySelector(s).getBoundingClientRect(); }); return Math.abs(b[0].top - b[1].top) < 2 && Math.abs(b[1].top - b[2].top) < 2 && b[0].left < b[1].left && b[1].left < b[2].left; } },
+
+  { t: 'Add an icon above each heading', sel: '.middle_con h2',
+    goal: 'Use the icon recipe: the heading is the relative parent, and a :before circle is absolutely positioned at the top, centered.',
+    hint: 'h2 needs position: relative and padding-top to make room. The :before needs content: "", position: absolute, top/left/right 0, margin: 0 auto, and a width and height.',
+    starter: `.middle_con h2 {\n  position: ___;\n  padding-top: 70px;\n  text-align: center;\n}\n.middle_con h2:before {\n  content: "";\n  position: ___;\n  top: 0;\n  left: 0;\n  right: 0;\n  margin: 0 auto;\n  width: 57px;\n  height: 57px;\n  border-radius: 50%;\n  background: #4f46e5;\n}`,
+    ans: `.middle_con h2 {\n  position: relative;\n  padding-top: 70px;\n  text-align: center;\n}\n.middle_con h2:before {\n  content: "";\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  margin: 0 auto;\n  width: 57px;\n  height: 57px;\n  border-radius: 50%;\n  background: #4f46e5;\n}`,
+    test: function (d, w) { var h = d.querySelector('.middle_con h2'), cs = w.getComputedStyle(h), b = w.getComputedStyle(h, '::before'); return cs.position === 'relative' && b.position === 'absolute' && b.content !== 'none' && b.content !== 'normal' && parseFloat(b.width) > 0 && parseFloat(b.height) > 0; } },
+
+  { t: 'Content and sidebar side by side', sel: '.main_info,.main_side',
+    goal: 'Float the main content to the right (68% wide) and the sidebar to the left (28% wide).',
+    hint: 'float: right on .main_info, float: left on .main_side, each with a % width.',
+    starter: `.main_info {\n  float: ___;\n  width: ___%;\n}\n.main_side {\n  float: ___;\n  width: ___%;\n}`,
+    ans: `.main_info {\n  float: right;\n  width: 68%;\n}\n.main_side {\n  float: left;\n  width: 28%;\n}`,
+    test: function (d, w) { var a = w.getComputedStyle(d.querySelector('.main_info')).getPropertyValue('float'), b = w.getComputedStyle(d.querySelector('.main_side')).getPropertyValue('float'); return a !== 'none' && b !== 'none' && a !== b; } },
+
+  { t: 'Fix the collapsed container', sel: '.main_con',
+    goal: 'Floats make their parent collapse. Add the clearfix from the template so .main_con wraps its floated children again.',
+    hint: 'Select .clearfix:before and .clearfix:after together, then content: "", display: table, clear: both. (Do step 5 first.)',
+    starter: `.clearfix:before,\n.clearfix:after {\n  content: ___;\n  display: ___;\n  clear: ___;\n}`,
+    ans: `.clearfix:before,\n.clearfix:after {\n  content: "";\n  display: table;\n  clear: both;\n}`,
+    test: function (d, w) { var m = d.querySelector('.main_con').offsetHeight, i = d.querySelector('.main_info'), s = d.querySelector('.main_side'); return w.getComputedStyle(i).getPropertyValue('float') !== 'none' && m > 0 && m >= Math.max(i.offsetHeight, s.offsetHeight); } },
+
+  { t: 'Put the menu in a row', sel: '#nav_area li',
+    goal: 'The menu items are stacked. Put them in a row with the inline-block rule, and give the links some padding and a color.',
+    hint: 'display: inline-block and vertical-align: top on the li. Then make the links display: block with padding.',
+    starter: `#nav_area {\n  background: #1d2433;\n}\n#nav_area li {\n  display: ___;\n  vertical-align: ___;\n}\n#nav_area a {\n  display: block;\n  padding: 12px 14px;\n  color: #fff;\n}`,
+    ans: `#nav_area {\n  background: #1d2433;\n}\n#nav_area li {\n  display: inline-block;\n  vertical-align: top;\n}\n#nav_area a {\n  display: block;\n  padding: 12px 14px;\n  color: #fff;\n}`,
+    test: function (d, w) { var li = d.querySelector('#nav_area li'), cs = w.getComputedStyle(li), ul = w.getComputedStyle(li.parentElement); return (cs.display === 'inline-block' && cs.verticalAlign === 'top') || ul.display === 'flex'; } },
+
+  { t: 'Zebra paragraphs', sel: '.main_info p',
+    goal: 'Give every odd paragraph in the main content a light background, so odd and even look different.',
+    hint: ':nth-child(odd) picks the 1st, 3rd, 5th... child.',
+    starter: `.main_info p:nth-child(___) {\n  background: ___;\n}`,
+    ans: `.main_info p:nth-child(odd) {\n  background: #eef2ff;\n}`,
+    test: function (d, w) { var p = d.querySelectorAll('.main_info p'); return w.getComputedStyle(p[0]).backgroundColor !== w.getComputedStyle(p[1]).backgroundColor; } },
+
+  { t: 'Uppercase footer', sel: 'footer p',
+    goal: 'Make the footer text all capital letters, without retyping it.',
+    hint: 'text-transform: uppercase.',
+    starter: `footer {\n  padding: 20px 0;\n  text-transform: ___;\n}`,
+    ans: `footer {\n  padding: 20px 0;\n  text-transform: uppercase;\n}`,
+    test: function (d, w) { return w.getComputedStyle(d.querySelector('footer p')).textTransform === 'uppercase'; } }
+];
+
+function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; }
+var frame = document.getElementById('frame'), prevBox = document.getElementById('prev'), ta = document.getElementById('css');
+var insp = document.getElementById('insp'), count = document.getElementById('count'), dotsBox = document.getElementById('dots'), card = document.getElementById('stepcard');
+var results = STEPS.map(function () { return false; }), cur = 0, timer, hintOpen = false, first = true;
+
+try { ta.value = localStorage.getItem('csslab-capstone-css') || ''; } catch (e) {}
+var SELECTORS = ['.wrapper', '#nav_area', '#nav_area li', '#nav_area a', '#banner', '.middle_con', '[class*="mid_box"]', '.mid_box1', '.mid_box2', '.mid_box3', '.middle_con h2', '.middle_con h2:before', '.main_con', '.main_info', '.main_side', '.main_info p', '.main_info p:nth-child(odd)', '.clearfix:before', '.clearfix:after', 'footer', 'footer p'];
+document.getElementById('tokenslot').appendChild(window.tokenBar(ta));
+document.getElementById('tokenslot').appendChild(window.cssSuggest(ta, { selectors: SELECTORS, focus: function () { return STEPS[cur].ans; } }));
+
+function doc() { try { return frame.contentDocument; } catch (e) { return null; } }
+
+function setHighlight() {
+  var d = doc(); if (!d || !d.querySelector('#h')) return;
+  d.querySelector('#h').textContent = STEPS[cur].sel + '{outline:3px dashed #f59e0b!important;outline-offset:2px}[data-tap]{outline:3px solid #ec4899!important;outline-offset:-3px}';
+}
+
+function fit() {
+  var d = doc(); if (!d || !d.documentElement) return;
+  var h = d.documentElement.scrollHeight, s = Math.min(1, prevBox.clientWidth / DESIGN_W);
+  frame.style.height = h + 'px';
+  frame.style.transform = 'scale(' + s + ')';
+  prevBox.style.height = Math.ceil(h * s) + 'px';
+}
+
+function inspect(t) {
+  var d = doc(), w = frame.contentWindow;
+  d.querySelectorAll('[data-tap]').forEach(function (x) { x.removeAttribute('data-tap'); });
+  t.setAttribute('data-tap', '1');
+  var cs = w.getComputedStyle(t);
+  var name = t.tagName.toLowerCase() + (t.id ? '#' + t.id : '') + (typeof t.className === 'string' && t.className.trim() ? '.' + t.className.trim().split(/\s+/).join('.') : '');
+  insp.textContent = '';
+  insp.appendChild(el('b', '', name));
+  insp.appendChild(document.createTextNode('\n' + ['display: ' + cs.display, 'position: ' + cs.position, 'float: ' + cs.getPropertyValue('float'), 'width: ' + Math.round(parseFloat(cs.width)) + 'px', 'margin: ' + cs.margin, 'padding: ' + cs.padding].join('\n')));
+}
+
+function renderCard() {
+  var s = STEPS[cur], ok = results[cur];
+  card.textContent = '';
+  card.appendChild(el('span', 'step_chip', 'Step ' + (cur + 1) + ' of ' + STEPS.length));
+  card.appendChild(el('h3', '', s.t));
+  card.appendChild(el('p', 'goal', s.goal));
+  var tg = el('p', 'target');
+  tg.appendChild(document.createTextNode('Style this: '));
+  tg.appendChild(el('code', '', s.sel));
+  tg.appendChild(document.createTextNode(' (outlined in orange in the preview)'));
+  card.appendChild(tg);
+
+  var acts = el('div', 'chal_actions');
+  var bS = el('button', 'btn', 'Insert starter'), bH = el('button', 'btn', 'Hint'), bA = el('button', 'btn', 'Insert answer');
+  [bS, bH, bA].forEach(function (b) { b.type = 'button'; acts.appendChild(b); });
+  card.appendChild(acts);
+  var hint = el('p', 'hint', 'Hint: ' + s.hint); hint.hidden = !hintOpen; card.appendChild(hint);
+
+  var st = el('p', ok ? 'stepok' : 'stepno', ok ? 'Done! This step works.' : 'Not yet. The preview does not meet this step.');
+  card.appendChild(st);
+
+  var nav = el('div', 'chal_actions');
+  var bB = el('button', 'btn', 'Back'), bN = el('button', ok ? 'btn primary' : 'btn', cur < STEPS.length - 1 ? 'Next step' : 'Finish');
+  bB.type = 'button'; bN.type = 'button'; bB.disabled = cur === 0; bN.disabled = cur === STEPS.length - 1 && !ok;
+  nav.appendChild(bB); nav.appendChild(bN); card.appendChild(nav);
+
+  function append(text) {
+    var v = ta.value;
+    if (s.starter && v.indexOf(s.starter) > -1 && text === s.ans) ta.value = v.replace(s.starter, s.ans);
+    else ta.value = v + (v && !/\n\n$/.test(v) ? (/\n$/.test(v) ? '\n' : '\n\n') : '') + text + '\n';
+    run();
+    ta.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+  bS.addEventListener('click', function () { if (ta.value.indexOf(s.starter) < 0) append(s.starter); });
+  bA.addEventListener('click', function () { if (ta.value.indexOf(s.ans) < 0) append(s.ans); });
+  bH.addEventListener('click', function () { hintOpen = !hintOpen; hint.hidden = !hintOpen; });
+  bB.addEventListener('click', function () { go(cur - 1); });
+  bN.addEventListener('click', function () { go(cur + 1); });
+}
+
+function go(i) { cur = Math.max(0, Math.min(STEPS.length - 1, i)); hintOpen = false; renderCard(); renderDots(); setHighlight(); }
+
+function renderDots() {
+  dotsBox.textContent = '';
+  STEPS.forEach(function (s, i) {
+    var b = el('button', (results[i] ? 'done ' : '') + (i === cur ? 'cur' : ''), String(i + 1));
+    b.type = 'button'; b.title = s.t; b.setAttribute('aria-label', 'Step ' + (i + 1) + ': ' + s.t);
+    b.addEventListener('click', function () { go(i); });
+    dotsBox.appendChild(b);
+  });
+}
+
+function run() {
+  var d = doc(), w = frame.contentWindow;
+  if (!d || !d.querySelector('#u')) { count.textContent = 'Preview unavailable. Open the site through a local server.'; return; }
+  d.querySelector('#u').textContent = ta.value;
+  var prevOk = results.slice();
+  results = STEPS.map(function (s) { var ok = false; try { ok = !!s.test(d, w); } catch (e) {} return ok; });
+  var n = results.filter(Boolean).length;
+  count.textContent = n + ' / ' + STEPS.length + ' steps done' + (n === STEPS.length ? ' · Capstone complete!' : '');
+  try { localStorage.setItem('csslab-capstone-css', ta.value); if (n === STEPS.length) localStorage.setItem('csslab-capstone', 'true'); } catch (e) {}
+  renderDots();
+  if (prevOk[cur] !== results[cur] || first) { renderCard(); first = false; }
+  fit();
+}
+
+frame.addEventListener('load', function () {
+  var d = doc(); if (!d) return;
+  d.addEventListener('click', function (e) { e.preventDefault(); inspect(e.target); }, true);
+  first = true; run();
+  var i = results.indexOf(false); go(i < 0 ? 0 : i);
+  fit();
+});
+frame.srcdoc = '<!DOCTYPE html><html><head><meta charset="utf-8"><style>' + RESET + '</style><style id="u"></style><style id="h"></style></head><body>' + PAGE + '</body></html>';
+
+ta.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 150); });
+window.addEventListener('resize', fit);
+document.getElementById('bSee').addEventListener('click', function () { document.querySelector('.cap_prevcard').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+document.getElementById('bClear').addEventListener('click', function () { if (!ta.value || confirm('Clear your CSS?')) { ta.value = ''; run(); } });
+document.getElementById('bCopy').addEventListener('click', function () {
+  var b = this, ok = function () { b.textContent = 'Copied!'; setTimeout(function () { b.textContent = 'Copy my CSS'; }, 1500); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(ok, function () { ta.select(); try { document.execCommand('copy'); ok(); } catch (e) {} });
+  else { ta.select(); try { document.execCommand('copy'); ok(); } catch (e) {} }
+});
+</script>
+</body>
+</html>

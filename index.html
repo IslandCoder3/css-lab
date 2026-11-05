@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS Lab – Learn CSS by Doing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="protect-me">
+<div class="clearfix">
+
+<!-- Header -->
+<header>
+  <div class="wrapper">
+    <div class="header_con">
+      <div class="main_logo"><a href="#top">CSS <span>Lab</span></a></div>
+      <div class="head_info">17 lessons · learn by doing</div>
+    </div>
+  </div>
+</header>
+
+<!-- Navigation -->
+<div id="nav_area">
+  <div class="wrapper">
+    <button class="hamburger" type="button" aria-label="Toggle menu">&#9776; Menu</button>
+    <ul>
+      <li><a href="#basics">Basics</a></li>
+      <li><a href="#boxmodel">Box Model</a></li>
+      <li><a href="#layout">Layout</a></li>
+      <li><a href="#advanced">Advanced</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Banner -->
+<div id="banner">
+  <div class="wrapper">
+    <div class="bnr_info">
+      <h1>Learn CSS <span>by breaking it</span></h1>
+      <p>Live demos, the rules that matter, practice drills and a capstone where you rebuild a full page yourself.</p>
+      <a href="#l1">Start Lesson 1</a><a class="ghost" href="capstone.html">Jump to the capstone</a>
+      <div class="stats"><div><b>17</b><span>Lessons</span></div><div><b>12</b><span>Drills</span></div><div><b>9</b><span>Game levels</span></div><div><b>10</b><span>Quiz questions</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Middle -->
+<div id="middle">
+  <div class="wrapper">
+    <div class="middle_con">
+      <section class="mid_box1"><h2>Basics</h2><p>What CSS is, color, background and fonts.</p><a href="#l1">Lessons 1–4</a></section>
+      <section class="mid_box2"><h2>Box Model</h2><p>Width, height, padding and margin.</p><a href="#l4">Lessons 5–7</a></section>
+      <section class="mid_box3"><h2>Layout</h2><p>Display, flex, float, position.</p><a href="#l8">Lessons 8–11</a></section>
+      <section class="mid_box4"><h2>Advanced</h2><p>z-index, pseudo-elements, selectors, gradients, text.</p><a href="#l14">Lessons 12–17</a></section>
+    </div>
+  </div>
+</div>
+
+<!-- Main -->
+<div id="main_area">
+  <div class="wrapper">
+    <div class="main_con clearfix">
+      <main id="top">
+
+        <h2 class="group" id="basics">Basics</h2>
+
+        <section class="lesson" id="l1">
+          <h3>1. What is CSS?</h3>
+          <p>CSS (Cascading Style Sheets) controls how HTML looks. HTML is the structure, CSS is the paint. Every rule has a selector, a property and a value.</p>
+          <pre class="code">selector {
+  property: value;
+}</pre>
+          <div class="stage how" data-mode="inline">
+            <pre class="code h-inline">&lt;p style="color: red;"&gt;Hello&lt;/p&gt;</pre>
+            <pre class="code h-internal">&lt;head&gt;
+  &lt;style&gt;
+    p { color: red; }
+  &lt;/style&gt;
+&lt;/head&gt;</pre>
+            <pre class="code h-external">&lt;head&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+
+/* style.css */
+p { color: red; }</pre>
+          </div>
+          <div class="controls">
+            <label>Way to apply CSS
+              <select data-attr="data-mode" data-target=".how" data-label="method"><option value="inline">Inline (style attribute)</option><option value="internal">Internal (&lt;style&gt; tag)</option><option value="external">External (.css file)</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l2">
+          <h3>2. Color</h3>
+          <p><code>color</code> sets the text color. <code>background-color</code> sets the fill behind it.</p>
+          <div class="stage"><div class="box target">Pick my colors</div></div>
+          <div class="controls">
+            <label>Text <input type="color" value="#ffffff" data-prop="color"></label>
+            <label>Background <input type="color" value="#4f46e5" data-prop="background-color"></label>
+            <label>Same color, 4 formats
+              <select data-prop="background-color"><option>blue</option><option>#3b82f6</option><option>rgb(59, 130, 246)</option><option>rgba(59, 130, 246, 0.4)</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l3">
+          <h3>3. Background</h3>
+          <p>A background image can repeat, resize and move. Here the "image" is a dot pattern made with CSS.</p>
+          <div class="stage"><div class="bgdemo target"></div></div>
+          <div class="controls">
+            <label>background-repeat
+              <select data-prop="background-repeat"><option>repeat</option><option>no-repeat</option><option>repeat-x</option><option>repeat-y</option></select></label>
+            <label>background-size
+              <select data-prop="background-size"><option>40px 40px</option><option>20px 20px</option><option>80px 80px</option></select></label>
+            <label>background-position
+              <select data-prop="background-position"><option>0 0</option><option>center</option><option>right bottom</option></select></label>
+            <label>background (shorthand)
+              <select data-prop="background"><option>#fde68a</option><option>radial-gradient(#4f46e5 10px, transparent 11px) no-repeat center top / 60px 60px #e0e7ff</option><option>radial-gradient(#4f46e5 10px, transparent 11px) repeat-x left bottom / 60px 60px #e0e7ff</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l7">
+          <h3>4. Fonts</h3>
+          <p>Control the typeface, size and weight of text.</p>
+          <div class="stage"><p class="target">The quick brown fox jumps over the lazy dog.</p></div>
+          <div class="controls">
+            <label>font-family
+              <select data-prop="font-family"><option>system-ui, sans-serif</option><option>Georgia, serif</option><option>"Courier New", monospace</option></select></label>
+            <label>font-size <input type="range" min="12" max="48" value="18" data-prop="font-size" data-unit="px"></label>
+            <label>font-weight <input type="range" min="100" max="900" step="100" value="400" data-prop="font-weight"></label>
+            <label>font (shorthand)
+              <select data-prop="font"><option>italic 700 20px Georgia, serif</option><option>400 16px Arial, sans-serif</option><option>700 28px "Courier New", monospace</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <h2 class="group" id="boxmodel">Box Model</h2>
+
+        <section class="lesson" id="l4">
+          <h3>5. Width &amp; Height</h3>
+          <p>Size an element with a fixed unit (<code>px</code>) or a flexible one (<code>%</code>) that follows its parent.</p>
+          <div class="stage"><div class="box target">Resize me</div></div>
+          <div class="controls">
+            <label>width (%) <input type="range" min="10" max="100" value="50" data-prop="width" data-unit="%"></label>
+            <label>height (px) <input type="range" min="30" max="200" value="60" data-prop="height" data-unit="px"></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l5">
+          <h3>6. Padding</h3>
+          <p>Padding is the space <em>inside</em> an element, between its content and its edge.</p>
+          <div class="stage"><div class="paddemo target"><span class="box">content</span></div></div>
+          <div class="controls">
+            <label>padding (px) <input type="range" min="0" max="60" value="10" data-prop="padding" data-unit="px"></label>
+            <label>padding (shorthand)
+              <select data-prop="padding"><option>20px</option><option>20px 15px</option><option>20px 15px 0</option><option>5px 10px 15px 20px</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l6">
+          <h3>7. Margin</h3>
+          <p>Margin is the space <em>outside</em> an element. It pushes neighbors away.</p>
+          <div class="stage margdemo"><div class="box">Neighbor</div><div class="box target">Margin me</div></div>
+          <div class="controls">
+            <label>margin (px) <input type="range" min="0" max="50" value="0" data-prop="margin" data-unit="px"></label>
+            <label>margin (shorthand)
+              <select data-prop="margin"><option>0</option><option>20px 15px</option><option>20px 15px 0</option><option>0 auto</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <h2 class="group" id="layout">Layout</h2>
+
+        <section class="lesson" id="l8">
+          <h3>8. Display: block, inline-block, none</h3>
+          <p><code>block</code> boxes stack and fill the row. <code>inline-block</code> boxes sit side by side but keep their size. <code>inline</code> ignores width and height. <code>none</code> removes the element completely.</p>
+          <div class="stage items"><div class="box">1</div><div class="box">2</div><div class="box">3</div><div class="box">4</div></div>
+          <div class="controls">
+            <label>display
+              <select data-prop="display" data-target=".items .box"><option>block</option><option>inline-block</option><option>inline</option><option>none</option></select></label>
+            <label>width (2 boxes 47%, 3 boxes 32%, 4 boxes 24%)
+              <select data-prop="width" data-target=".items .box"><option>90px</option><option>47%</option><option>32%</option><option>24%</option></select></label>
+            <label>vertical-align
+              <select data-prop="vertical-align" data-target=".items .box"><option>baseline</option><option>top</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l9">
+          <h3>9. Display: flex</h3>
+          <p>Flexbox lines children up and distributes space. Set the properties on the parent.</p>
+          <div class="stage flexdemo target"><div class="box">A</div><div class="box tall">B</div><div class="box">C</div></div>
+          <div class="controls">
+            <label>flex-direction
+              <select data-prop="flex-direction"><option>row</option><option>column</option><option>row-reverse</option></select></label>
+            <label>justify-content
+              <select data-prop="justify-content"><option>flex-start</option><option>center</option><option>flex-end</option><option>space-between</option><option>space-around</option></select></label>
+            <label>align-items
+              <select data-prop="align-items"><option>stretch</option><option>flex-start</option><option>center</option><option>flex-end</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l10">
+          <h3>10. Float &amp; clearfix</h3>
+          <p>Floated children leave the normal flow, so the parent collapses (watch the border shrink). A <code>clearfix</code> makes the parent wrap its floats again.</p>
+          <div class="stage"><div class="floatdemo"><div class="box">1</div><div class="box">2</div></div></div>
+          <div class="controls">
+            <label>float
+              <select data-prop="float" data-target=".floatdemo .box"><option>none</option><option>left</option><option>right</option></select></label>
+            <label><input type="checkbox" data-class="clearfix" data-target=".floatdemo"> add .clearfix to parent</label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l13">
+          <h3>11. Position</h3>
+          <p><code>static</code> ignores offsets. <code>relative</code> shifts from its normal spot. <code>absolute</code> leaves the flow and positions against the nearest positioned parent.</p>
+          <div class="stage posdemo"><div class="box">Normal box</div><div class="box alt target">Move me</div><div class="box">Normal box</div></div>
+          <div class="controls">
+            <label>position
+              <select data-prop="position"><option>static</option><option>relative</option><option>absolute</option></select></label>
+            <label>top (px) <input type="range" min="0" max="100" value="0" data-prop="top" data-unit="px"></label>
+            <label>left (px) <input type="range" min="0" max="200" value="0" data-prop="left" data-unit="px"></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <h2 class="group" id="advanced">Advanced</h2>
+
+        <section class="lesson" id="l14">
+          <h3>12. z-index</h3>
+          <p>On positioned elements, <code>z-index</code> decides who sits on top. Slide the green box between the others.</p>
+          <div class="stage zdemo">
+            <div class="zbox za">A (z 1)</div>
+            <div class="zbox zb target">B</div>
+            <div class="zbox zc">C (z 3)</div>
+          </div>
+          <div class="controls">
+            <label>z-index of B <input type="range" min="0" max="5" value="2" data-prop="z-index"></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l11">
+          <h3>13. ::before &amp; ::after</h3>
+          <p>Pseudo-elements add decoration from CSS without touching the HTML.</p>
+          <div class="stage pdemo target" data-mode="off"><span class="tagged">Pseudo-element demo</span><h4 class="icon_h">Services</h4></div>
+          <div class="controls">
+            <label>Decoration
+              <select data-attr="data-mode" data-label="active"><option value="off">none</option><option value="on">.tagged::before + ::after</option><option value="icon">h4::before icon (position: absolute)</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l12">
+          <h3>14. :nth-child</h3>
+          <p>Pick elements by their position among siblings.</p>
+          <div class="stage"><ul class="nthdemo target"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></div>
+          <div class="controls">
+            <label>Selector
+              <select data-attr="data-mode" data-label="selector"><option value="none">(none)</option><option value="odd">li:nth-child(odd)</option><option value="even">li:nth-child(even)</option><option value="3n">li:nth-child(3n)</option><option value="first">li:first-child</option><option value="last">li:last-child</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l15">
+          <h3>15. CSS selectors</h3>
+          <p>Selectors decide <em>which</em> elements a rule hits. Notice that the child selector skips the nested paragraph.</p>
+          <div class="stage selbox target" data-mode="none">
+            <p>p</p><p class="note">p.note</p><p id="special">p#special</p><p class="mid_box1">p.mid_box1</p><p class="mid_box2">p.mid_box2</p>
+            <div><p>nested p inside a div</p></div>
+          </div>
+          <div class="controls">
+            <label>Selector
+              <select data-attr="data-mode" data-label="selector"><option value="none">(none)</option><option value="p">.selbox p</option><option value="class">.note</option><option value="id">#special</option><option value="child">.selbox &gt; p</option><option value="adj">.note + p</option><option value="attr">[id]</option><option value="contains">[class*="mid_box"]</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l16">
+          <h3>16. Gradients</h3>
+          <p>Gradients are generated images, so they go in <code>background-image</code>.</p>
+          <div class="stage"><div class="graddemo target"></div></div>
+          <div class="controls">
+            <label>background-image
+              <select data-prop="background-image">
+                <option>linear-gradient(90deg, #f6d365, #fda085)</option>
+                <option>linear-gradient(135deg, #4f46e5, #06b6d4)</option>
+                <option>radial-gradient(circle, #fff, #4f46e5)</option>
+                <option>conic-gradient(#4f46e5, #06b6d4, #f6d365, #4f46e5)</option>
+                <option>repeating-linear-gradient(45deg, #4f46e5 0 10px, #fff 10px 20px)</option>
+              </select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l17">
+          <h3>17. Text styling &amp; border-radius</h3>
+          <p><code>text-transform</code> changes capitalization, <code>word-wrap: break-word</code> stops long words from overflowing, and <code>border-radius</code> rounds corners.</p>
+          <div class="stage"><div class="txtdemo target">Supercalifragilisticexpialidocious_Wordthatistoolongforthisbox</div></div>
+          <div class="controls">
+            <label>text-transform
+              <select data-prop="text-transform"><option>none</option><option>uppercase</option><option>lowercase</option><option>capitalize</option></select></label>
+            <label>word-wrap
+              <select data-prop="word-wrap"><option>normal</option><option>break-word</option></select></label>
+            <label>border-radius (px) <input type="range" min="0" max="60" value="0" data-prop="border-radius" data-unit="px"></label>
+            <label>border-radius (shape)
+              <select data-prop="border-radius"><option>0</option><option>50%</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+      </main>
+
+      <aside class="sidebar">
+        <h3>Lessons</h3>
+        <ol>
+          <li><a href="#l1">What is CSS</a></li>
+          <li><a href="#l2">Color</a></li>
+          <li><a href="#l3">Background</a></li>
+          <li><a href="#l7">Fonts</a></li>
+          <li><a href="#l4">Width &amp; Height</a></li>
+          <li><a href="#l5">Padding</a></li>
+          <li><a href="#l6">Margin</a></li>
+          <li><a href="#l8">Display</a></li>
+          <li><a href="#l9">Flex</a></li>
+          <li><a href="#l10">Float &amp; clearfix</a></li>
+          <li><a href="#l13">Position</a></li>
+          <li><a href="#l14">z-index</a></li>
+          <li><a href="#l11">::before / ::after</a></li>
+          <li><a href="#l12">:nth-child</a></li>
+          <li><a href="#l15">Selectors</a></li>
+          <li><a href="#l16">Gradients</a></li>
+          <li><a href="#l17">Text &amp; border-radius</a></li>
+        </ol>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer_top">
+    <div class="wrapper">
+      <h2>Keep practicing</h2>
+      <p>Open DevTools (F12) on any demo and edit the same properties by hand.</p>
+    </div>
+  </div>
+  <div class="footer_btm">
+    <div class="wrapper footer_btm_con">
+      <div class="footer_nav">
+        <ul>
+          <li><a href="#basics">Basics</a></li>
+          <li><a href="#boxmodel">Box Model</a></li>
+          <li><a href="#layout">Layout</a></li>
+          <li><a href="#advanced">Advanced</a></li>
+        </ul>
+      </div>
+      <div class="copyright">&copy; CSS Lab</div>
+    </div>
+  </div>
+</footer>
+
+<span class="back_top" title="Back to top"></span>
+
+</div><!-- End Clearfix -->
+</div><!-- End Protect Me -->
+<script src="script.js"></script>
+<script src="project.js"></script>
+</body>
+</html>
