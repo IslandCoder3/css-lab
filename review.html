@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Review – CSS Lab</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#6366f1">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+<div class="protect-me"><div class="clearfix">
+
+<header>
+  <div class="wrapper"><div class="header_con">
+    <div class="main_logo"><a href="index.html">CSS <span>Lab</span></a></div>
+    <div class="head_info">Review</div>
+  </div></div>
+</header>
+
+<div id="nav_area"><div class="wrapper">
+  <button class="hamburger" type="button" aria-label="Toggle menu">&#9776; Menu</button>
+  <ul></ul>
+</div></div>
+
+<div id="main_area"><div class="wrapper">
+  <section class="card" style="margin:0 auto 18px">
+    <h1>Review your mistakes</h1>
+    <p>Check questions you missed in the lessons come back here. Answer one correctly and it leaves your list.</p>
+    <span class="counter" id="rvcount"></span>
+  </section>
+  <section class="card" id="rv" style="margin:0 auto"></section>
+</div></div>
+
+<footer><div class="footer_btm"><div class="wrapper footer_btm_con">
+  <div class="copyright">&copy; CSS Lab</div>
+</div></div></footer>
+
+<span class="back_top" title="Back to top"></span>
+</div></div>
+
+<script src="script.js"></script>
+<script src="project.js"></script>
+<script>
+var C = window.CSSLAB, DATA = C.DATA, T = C.TITLES;
+var box = document.getElementById('rv'), count = document.getElementById('rvcount');
+var queue = [], idx = 0, cleared = 0, answered = false;
+
+function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; }
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function pending() { return Object.keys(C.getMissed()).filter(function (id) { return DATA[id]; }); }
+
+function startRound() { queue = shuffle(pending()); idx = 0; cleared = 0; render(); }
+
+function render() {
+  var n = pending().length;
+  count.textContent = n ? n + ' question' + (n === 1 ? '' : 's') + ' to review' : 'All clear';
+  box.textContent = '';
+  answered = false;
+  if (!queue.length) return empty();
+  if (idx >= queue.length) return summary();
+
+  var id = queue[idx], d = DATA[id];
+  box.appendChild(el('span', 'step_chip', 'Question ' + (idx + 1) + ' of ' + queue.length));
+  var from = el('p', 'goal'); from.appendChild(document.createTextNode('From the lesson: '));
+  var a = el('a', '', T[id]); a.href = 'index.html#' + id; from.appendChild(a);
+  box.appendChild(from);
+  box.appendChild(el('h3', 'gtitle', d[1]));
+
+  var note = el('div', 'remember'); note.hidden = true;
+  note.appendChild(el('b', '', 'Remember')); note.appendChild(document.createTextNode(d[0]));
+
+  var peek = el('button', 'btn', 'Show the lesson note'); peek.type = 'button';
+  peek.addEventListener('click', function () { note.hidden = !note.hidden; peek.textContent = note.hidden ? 'Show the lesson note' : 'Hide the lesson note'; });
+
+  var opts = [], fb = el('div', 'gmsg'); fb.hidden = true;
+  var next = el('button', 'btn primary', idx < queue.length - 1 ? 'Next question' : 'See results'); next.type = 'button'; next.hidden = true;
+  next.addEventListener('click', function () { idx++; render(); });
+
+  shuffle(d[2].map(function (t, i) { return { t: t, i: i }; })).forEach(function (o) {
+    var b = el('button', 'q_opt', o.t); b.type = 'button';
+    b.addEventListener('click', function () {
+      if (answered) return; answered = true;
+      var ok = o.i === d[3];
+      opts.forEach(function (x) { x.b.disabled = true; if (x.o.i === d[3]) x.b.classList.add('right'); });
+      var m = C.getMissed();
+      if (ok) {
+        cleared++; delete m[id];
+        fb.className = 'gmsg good'; fb.textContent = 'Correct! This question is cleared from your review list.';
+      } else {
+        b.classList.add('wrong');
+        m[id] = { n: ((m[id] && m[id].n) || 0) + 1 };
+        fb.className = 'gmsg bad'; fb.textContent = 'Not yet. Read the lesson note below. This question will come back.';
+        note.hidden = false; peek.hidden = true;
+      }
+      C.setMissed(m);
+      var left = pending().length;
+      count.textContent = left ? left + ' question' + (left === 1 ? '' : 's') + ' to review' : 'All clear';
+      fb.hidden = false; next.hidden = false;
+    });
+    opts.push({ b: b, o: o });
+    box.appendChild(b);
+  });
+  box.appendChild(peek); box.appendChild(note); box.appendChild(fb);
+  var acts = el('div', 'chal_actions'); acts.appendChild(next); box.appendChild(acts);
+}
+
+function empty() {
+  box.appendChild(el('h3', 'gtitle', 'Nothing to review right now'));
+  box.appendChild(el('p', 'goal', 'When you miss a check question in a lesson, it is saved here so you can practice it again. Keep going through the lessons and come back anytime.'));
+  var acts = el('div', 'chal_actions'); var a = el('a', 'btn primary', 'Go to the lessons'); a.href = 'index.html'; acts.appendChild(a); box.appendChild(acts);
+}
+
+function summary() {
+  var left = pending().length;
+  box.appendChild(el('span', 'step_chip', 'Round complete'));
+  box.appendChild(el('h3', 'gtitle', 'You cleared ' + cleared + ' of ' + queue.length));
+  box.appendChild(el('p', 'goal', left ? left + ' still to review. Read the lesson notes and try them again.' : 'Your review list is empty. Nice work!'));
+  var acts = el('div', 'chal_actions');
+  if (left) { var again = el('button', 'btn primary', 'Review again'); again.type = 'button'; again.addEventListener('click', startRound); acts.appendChild(again); }
+  var back = el('a', left ? 'btn' : 'btn primary', 'Back to the lessons'); back.href = 'index.html'; acts.appendChild(back);
+  box.appendChild(acts);
+}
+
+startRound();
+</script>
+</body>
+</html>

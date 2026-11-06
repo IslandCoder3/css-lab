@@ -55,7 +55,7 @@ var R = [
   `background shorthand|Image, repeat, position and color in one|background: url('images/bg.jpg') no-repeat center top #000;|l3`,
   `font shorthand|The last value is the font-family|font: italic 700 20px Georgia, serif;|l7`,
   `width / height|px is fixed, % follows the parent|width: 47%;|l4`,
-  `box-sizing reset|Template reset: include padding in the width|*, *:before, *:after { box-sizing: border-box; }|l4`,
+  `box-sizing reset|Template reset: include padding and border in the width|*, *:before, *:after { box-sizing: border-box; }|l25`,
   `padding shorthand|4 values: top right bottom left|padding: 20px 15px 0;|l5`,
   `margin / centering|Space outside; auto centers a block with a width|margin: 0 auto;|l6`,
   `inline-block boxes|Always add vertical-align: top and a width|display: inline-block; vertical-align: top; width: 32%;|l8`,
@@ -72,7 +72,21 @@ var R = [
   `attribute selector|Class contains a value|[class*="mid_box"] { width: 32%; }|l15`,
   `text-transform / word-wrap|Capitalize text; break long words|text-transform: uppercase; word-wrap: break-word;|l17`,
   `border-radius|Round corners (50% = circle)|border-radius: 50%;|l17`,
-  `gradients|Generated background images|background-image: linear-gradient(90deg, #f6d365, #fda085);|l16`
+  `gradients|Generated background images|background-image: linear-gradient(90deg, #f6d365, #fda085);|l16`,
+  `page skeleton|Every HTML page has the same parts|<!DOCTYPE html><html><head><title>My page</title></head><body>...</body></html>|l18`,
+  `headings & paragraphs|h1 is the main title, p is a paragraph|<h1>Title</h1> <p>Some text.</p>|l19`,
+  `link|Goes to another page|<a href="https://example.com">Link text</a>|l20`,
+  `image|Needs src and alt|<img src="photo.jpg" alt="Describe the photo">|l20`,
+  `lists|ul = bullets, ol = numbers, li = each item|<ul><li>One</li><li>Two</li></ul>|l21`,
+  `form fields|Input, textarea, select and button|<input type="email" placeholder="you@example.com">|l22`,
+  `class and id|class can repeat, id must be unique|<p class="note" id="intro">Text</p>|l23`,
+  `units|px fixed, % parent, rem root font, vw screen width|font-size: 1.25rem; width: 50vw;|l24`,
+  `border|Width, style and color|border: 2px solid #333; border-radius: 8px;|l25`,
+  `grid|Rows and columns on the parent|display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;|l26`,
+  `:hover|Style while the pointer is over it|a:hover { color: #db2777; }|l27`,
+  `transition|Animate the change (put it on the normal state)|transition: all .3s ease;|l27`,
+  `viewport meta|Needed for responsive pages|<meta name="viewport" content="width=device-width, initial-scale=1">|l28`,
+  `media query|Rules only for some screen sizes|@media (max-width: 600px) { .cards { flex-direction: column; } }|l28`
 ];
 
 var tbody = document.querySelector('tbody');

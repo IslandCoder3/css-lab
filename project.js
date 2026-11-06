@@ -86,7 +86,7 @@
   };
 
   // CSS suggestions while typing (chips above the editor; Tab accepts the first one)
-  var PROPS = ['display', 'position', 'float', 'clear', 'width', 'max-width', 'min-width', 'height', 'max-height', 'min-height', 'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', 'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'color', 'background', 'background-color', 'background-image', 'background-repeat', 'background-position', 'background-size', 'border', 'border-radius', 'border-top', 'border-bottom', 'box-sizing', 'font', 'font-family', 'font-size', 'font-weight', 'font-style', 'line-height', 'letter-spacing', 'text-align', 'text-transform', 'text-decoration', 'vertical-align', 'word-wrap', 'white-space', 'overflow', 'opacity', 'cursor', 'z-index', 'top', 'right', 'bottom', 'left', 'content', 'transform', 'transition', 'list-style', 'flex', 'flex-direction', 'flex-wrap', 'justify-content', 'align-items', 'gap', 'row-gap', 'column-gap', 'box-shadow'];
+  var PROPS = ['display', 'position', 'float', 'clear', 'width', 'max-width', 'min-width', 'height', 'max-height', 'min-height', 'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left', 'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'color', 'background', 'background-color', 'background-image', 'background-repeat', 'background-position', 'background-size', 'border', 'border-radius', 'border-top', 'border-bottom', 'box-sizing', 'font', 'font-family', 'font-size', 'font-weight', 'font-style', 'line-height', 'letter-spacing', 'text-align', 'text-transform', 'text-decoration', 'vertical-align', 'word-wrap', 'white-space', 'overflow', 'opacity', 'cursor', 'z-index', 'top', 'right', 'bottom', 'left', 'content', 'transform', 'transition', 'list-style', 'flex', 'flex-direction', 'flex-wrap', 'justify-content', 'align-items', 'gap', 'row-gap', 'column-gap', 'box-shadow', 'grid-template-columns', 'border-style', 'border-width', 'border-color', 'border-left', 'border-right'];
   var COLORS = ['#fff', '#333', '#000', 'red', 'yellow', 'blue', 'rgba(0, 0, 0, 0.5)', 'transparent'];
   var VALS = {
     display: ['block', 'inline-block', 'inline', 'none', 'flex', 'table', 'grid'],
@@ -129,7 +129,10 @@
     gap: ['20px', '10px'],
     'row-gap': ['30px', '20px'],
     'column-gap': ['20px', '10px'],
-    'box-shadow': ['0 4px 12px rgba(0, 0, 0, 0.2)', 'none']
+    'box-shadow': ['0 4px 12px rgba(0, 0, 0, 0.2)', 'none'],
+    'grid-template-columns': ['repeat(3, 1fr)', '1fr 1fr 1fr', '1fr 2fr', 'repeat(2, 1fr)', '100px 1fr', 'repeat(auto-fit, minmax(100px, 1fr))'],
+    'border-style': ['solid', 'dashed', 'dotted', 'double', 'none'],
+    'border-width': ['1px', '2px', '4px']
   };
   var PSEUDOS = [':before', ':after', ':hover', ':first-child', ':last-child', ':nth-child(odd)', ':nth-child(even)', ':nth-child(3n)', '::placeholder', '::before', '::after'];
   var TAGS = ['header', 'footer', 'nav', 'ul', 'li', 'a', 'p', 'h1', 'h2', 'h3', 'img', 'body'];
@@ -244,14 +247,17 @@
   // Shared navigation
   var ul = document.querySelector('#nav_area ul');
   var here = location.pathname.split('/').pop() || 'index.html';
-  [['Lessons', 'index.html'], ['Practice', 'practice.html'], ['Capstone', 'capstone.html'], ['Quiz', 'quiz.html'], ['Cheatsheet', 'cheatsheet.html']].forEach(function (p) {
+  var reviewLink = null;
+  [['Lessons', 'index.html'], ['Practice', 'practice.html'], ['Capstone', 'capstone.html'], ['Quiz', 'quiz.html'], ['Review', 'review.html'], ['Cheatsheet', 'cheatsheet.html']].forEach(function (p) {
     var li = el('li'), a = el('a', '', p[0]);
     a.href = p[1];
+    if (p[1] === 'review.html') reviewLink = a;
     if (here === p[1] || (p[1] === 'capstone.html' && here === 'capstone-pro.html')) a.setAttribute('aria-current', 'page');
     if (!ul.querySelector('.pg') && ul.children.length) li.classList.add('pgfirst');
     li.classList.add('pg');
     li.appendChild(a); ul.appendChild(li);
   });
+  paintBadge();
 
   // Reading progress bar
   var bar = el('div'); bar.id = 'readbar'; document.body.appendChild(bar);
@@ -287,15 +293,40 @@
     l12: [`Pseudo-classes: :nth-child(n), :first-child, :last-child, :hover (styles an element while the mouse is over it; it works on any element, not only links and divs) and ::placeholder (styles the hint text inside an input). nth-child: odd = 1,3,5. even = 2,4,6. 3n = 3,6,9.`, `Which selector picks the 3rd, 6th and 9th items?`, [`li:nth-child(3)`, `li:nth-child(3n)`, `li:last-child`], 1],
     l15: [`Selectors: .class, #id, tag, .a .b (descendant), .a > .b (direct child), .a + .b (next sibling), [id] (attribute) and [class*="mid_box"], which matches any element whose class contains mid_box, whatever characters follow it (mid_box1, mid_box2, mid_box_big...).`, `What does [class*="mid_box"] match?`, [`Only the class exactly named mid_box`, `Any class containing mid_box`, `Only ids that start with mid_box`], 1],
     l16: [`Gradients go in background-image or the background shorthand: linear-gradient(90deg, #f6d365, #fda085). Radial and conic gradients exist too. A gradient generator can add fallbacks for old browsers (look for its max-compatibility option).`, `Where does linear-gradient() go?`, [`color`, `background-image`, `border-color`], 1],
-    l17: [`text-transform: uppercase makes text all caps. word-wrap: break-word breaks a long word so it doesn't overflow its box. border-radius rounds the corners, and 50% turns a square into a circle.`, `Which declaration turns a square box into a circle?`, [`border-radius: 50%`, `border: round`, `display: circle`], 0]
+    l17: [`text-transform: uppercase makes text all caps. word-wrap: break-word breaks a long word so it doesn't overflow its box. border-radius rounds the corners, and 50% turns a square into a circle.`, `Which declaration turns a square box into a circle?`, [`border-radius: 50%`, `border: round`, `display: circle`], 0],
+    l18: [`Every HTML page has the same skeleton. <!DOCTYPE html> tells the browser it is a modern HTML page, <html> wraps everything, <head> holds information about the page (like its <title>), and <body> holds everything people actually see.`, `Where does the content people see on the page go?`, [`<head>`, `<body>`, `<title>`], 1],
+    l19: [`HTML marks up the meaning of text. <h1> is the most important heading (use one per page), then <h2>, <h3> and so on. <p> is a paragraph, <strong> marks important text (bold) and <em> marks emphasis (italic). Most tags open and close: <p>text</p>.`, `Which tag is the main heading of a page?`, [`<h1>`, `<h6>`, `<head>`], 0],
+    l20: [`A link is <a href="url">text</a>. An image is <img src="file.jpg" alt="description">: img has no closing tag, and alt describes the image for people who cannot see it (and for search engines).`, `Which attribute describes an image for people who cannot see it?`, [`src`, `alt`, `href`], 1],
+    l21: [`<ul> makes a bulleted list, <ol> a numbered list, and every item goes inside an <li>. A list can sit inside another list's <li>. Menus, like the one at the top of this site, are usually built from lists.`, `Which tag wraps each item in a list?`, [`<li>`, `<ul>`, `<ol>`], 0],
+    l22: [`A form collects information. Fields include <input type="text">, type="email", type="checkbox", <textarea>, <select> with <option>s, and <button>. A <label> tells people what a field is for and makes it easier to tap.`, `Which tag gives people a multi-line text box?`, [`<input>`, `<textarea>`, `<select>`], 1],
+    l23: [`class and id connect HTML to CSS. class="note" can be used on many elements and is styled with .note. id="intro" must be used only once per page and is styled with #intro. A <div> is a generic box used to group things.`, `Which one should be used on only ONE element per page?`, [`class`, `id`, `div`], 1],
+    l24: [`px is a fixed size. % is relative to the parent. rem is relative to the root font size (16px by default), so 2rem = 32px. em is relative to the parent's font size. vw is 1% of the screen width. Use rem for text and % or vw for flexible layouts.`, `Which unit scales with the root font size?`, [`px`, `rem`, `%`], 1],
+    l25: [`border: 2px solid #333 sets the width, style and color in one go, and border-radius rounds the corners. By default, width does NOT include padding and border (content-box), so boxes end up wider than you expect. box-sizing: border-box includes them, which is why the template reset sets it on everything.`, `What does box-sizing: border-box do?`, [`Includes padding and border in the width`, `Draws a border around the box`, `Removes the padding`], 0],
+    l26: [`display: grid on the parent creates rows and columns. grid-template-columns: 1fr 1fr 1fr makes three equal columns (fr = one share of the free space) and gap adds space between cells. repeat(auto-fit, minmax(100px, 1fr)) makes columns that wrap on their own.`, `What does grid-template-columns: 1fr 2fr create?`, [`Two columns, the second twice as wide`, `Two equal columns`, `One column that is 3px wide`], 0],
+    l27: [`a:hover styles an element while the pointer is over it (on phones, while it is tapped). Put transition: all .3s ease on the normal state, not on :hover, so the change animates both in and out. Never rely on hover alone for something important, because touch screens have no real hover.`, `Where should transition go so the change animates in and out?`, [`On the normal state (not :hover)`, `Only on :hover`, `On the body`], 0],
+    l28: [`Responsive design makes one page fit every screen. Add <meta name="viewport" content="width=device-width, initial-scale=1"> in the head, use % or max-width instead of fixed widths, then add media queries: @media (max-width: 600px) { ... } applies those rules only on screens 600px wide or narrower.`, `What does @media (max-width: 600px) mean?`, [`Rules apply on screens 600px wide or narrower`, `Rules apply only above 600px`, `The page is always 600px wide`], 0]
   };
+
+  // Shared with the Review page: lesson titles and the list of missed check questions
+  var TITLES = { l1: 'What is CSS', l2: 'Color', l3: 'Background', l4: 'Width & Height', l5: 'Padding', l6: 'Margin', l7: 'Fonts', l8: 'Display', l9: 'Flex', l10: 'Float & clearfix', l11: '::before & ::after', l12: ':nth-child', l13: 'Position', l14: 'z-index', l15: 'CSS selectors', l16: 'Gradients', l17: 'Text & border-radius', l18: 'The page skeleton', l19: 'Headings & text', l20: 'Links & images', l21: 'Lists', l22: 'Forms', l23: 'Class & id', l24: 'Units', l25: 'Borders & box-sizing', l26: 'CSS Grid', l27: ':hover & transitions', l28: 'Responsive design' };
+  function getMissed() { return load('csslab-missed', {}); }
+  function setMissed(m) { save('csslab-missed', m); paintBadge(); }
+  function paintBadge() {
+    var n = Object.keys(getMissed()).length;
+    if (reviewLink) reviewLink.textContent = n ? 'Review (' + n + ')' : 'Review';
+  }
+  window.CSSLAB = { DATA: DATA, TITLES: TITLES, getMissed: getMissed, setMissed: setMissed };
+
+  // Links and forms inside the HTML demos should not navigate away
+  document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.htmldemo a')) e.preventDefault(); });
+  document.addEventListener('submit', function (e) { if (e.target.closest && e.target.closest('.htmldemo')) e.preventDefault(); });
 
   var lessons = document.querySelectorAll('main .lesson');
   var side = document.querySelector('.sidebar');
   if (!lessons.length || !side) return;
 
   // Group colors, number badges, sidebar group headings
-  var gmap = { basics: 'basics', boxmodel: 'box', layout: 'layout', advanced: 'adv' }, gname = { basics: 'Basics', box: 'Box Model', layout: 'Layout', adv: 'Advanced' }, cur = 'basics';
+  var gmap = { htmlbasics: 'html', basics: 'basics', boxmodel: 'box', layout: 'layout', advanced: 'adv', responsive: 'resp' }, gname = { html: 'HTML Basics', basics: 'CSS Basics', box: 'Box Model', layout: 'Layout', adv: 'Advanced', resp: 'Responsive' }, cur = 'html';
   Array.prototype.forEach.call(document.querySelector('main').children, function (n) {
     if (n.classList.contains('group')) cur = gmap[n.id] || cur;
     else if (n.classList.contains('lesson')) n.setAttribute('data-g', cur);
@@ -320,7 +351,7 @@
   var reset = el('button', 'reset', 'Reset progress'); reset.type = 'button';
   reset.addEventListener('click', function () {
     if (confirm('Clear all lesson and practice progress?')) {
-      try { localStorage.removeItem('csslab-done'); localStorage.removeItem('csslab-practice'); localStorage.removeItem('csslab-capstone'); } catch (e) {}
+      try { localStorage.removeItem('csslab-done'); localStorage.removeItem('csslab-practice'); localStorage.removeItem('csslab-capstone'); localStorage.removeItem('csslab-missed'); } catch (e) {}
       location.reload();
     }
   });
@@ -371,7 +402,10 @@
         } else {
           b.classList.add('wrong');
           b.disabled = true;
-          fb.textContent = 'Not quite. Re-read the Remember box and try again.';
+          var mm = getMissed();
+          mm[s.id] = { n: ((mm[s.id] && mm[s.id].n) || 0) + 1 };
+          setMissed(mm);
+          fb.textContent = 'Not quite. Re-read the Remember box and try again. (Saved to your Review list.)';
         }
       });
       opts.push(b);
@@ -383,6 +417,31 @@
     s.appendChild(c);
   });
   render();
+
+  // Responsive lesson: a real page in a frame, scaled to fit, with a screen width you control
+  var rf = document.getElementById('resframe');
+  if (rf) {
+    var RES_DOC = '<!DOCTYPE html><html><head><meta charset="utf-8"><style>' +
+      'body{margin:0;font:16px/1.4 Arial,sans-serif;background:#fff;color:#1d2433}' +
+      'header{background:linear-gradient(135deg,#6366f1,#22d3ee);color:#fff;padding:16px}' +
+      'h1{margin:0;font-size:28px}.cards{display:flex;gap:12px;padding:16px}' +
+      '.card{flex:1;background:#eef2ff;border-radius:12px;padding:14px}' +
+      '@media (max-width:600px){h1{font-size:20px}.cards{flex-direction:column}body{background:#fef3c7}}' +
+      '</style></head><body><header><h1>My Responsive Page</h1></header><div class="cards"><div class="card">One</div><div class="card">Two</div><div class="card">Three</div></div></body></html>';
+    var rw = document.getElementById('resW'), rbox = rf.parentNode, rinfo = document.getElementById('resinfo');
+    var fitRes = function () {
+      var W = +rw.value, s = Math.min(1, rbox.clientWidth / W);
+      rf.style.width = W + 'px';
+      rf.style.transform = 'scale(' + s + ')';
+      rbox.style.height = Math.ceil(260 * s) + 'px';
+      rinfo.textContent = 'Screen width: ' + W + 'px  ->  ' + (W <= 600 ? 'phone layout (the @media rule is ON)' : 'desktop layout (the @media rule is OFF)');
+    };
+    rf.addEventListener('load', fitRes);
+    rw.addEventListener('input', fitRes);
+    window.addEventListener('resize', fitRes);
+    rf.srcdoc = RES_DOC;
+    fitRes();
+  }
 
   // Highlight the lesson you are reading in the sidebar
   if ('IntersectionObserver' in window) {

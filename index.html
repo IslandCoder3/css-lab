@@ -20,7 +20,7 @@
   <div class="wrapper">
     <div class="header_con">
       <div class="main_logo"><a href="#top">CSS <span>Lab</span></a></div>
-      <div class="head_info">17 lessons · learn by doing</div>
+      <div class="head_info">28 lessons · learn by doing</div>
     </div>
   </div>
 </header>
@@ -30,10 +30,6 @@
   <div class="wrapper">
     <button class="hamburger" type="button" aria-label="Toggle menu">&#9776; Menu</button>
     <ul>
-      <li><a href="#basics">Basics</a></li>
-      <li><a href="#boxmodel">Box Model</a></li>
-      <li><a href="#layout">Layout</a></li>
-      <li><a href="#advanced">Advanced</a></li>
     </ul>
   </div>
 </div>
@@ -45,7 +41,7 @@
       <h1>Learn CSS <span>by breaking it</span></h1>
       <p>Live demos, the rules that matter, practice drills and a capstone where you rebuild a full page yourself.</p>
       <a href="#l1">Start Lesson 1</a><a class="ghost" href="capstone.html">Jump to the capstone</a>
-      <div class="stats"><div><b>17</b><span>Lessons</span></div><div><b>12</b><span>Drills</span></div><div><b>9</b><span>Game levels</span></div><div><b>10</b><span>Quiz questions</span></div></div>
+      <div class="stats"><div><b>28</b><span>Lessons</span></div><div><b>15</b><span>Drills</span></div><div><b>9</b><span>Game levels</span></div><div><b>16</b><span>Quiz questions</span></div></div>
     </div>
   </div>
 </div>
@@ -54,10 +50,12 @@
 <div id="middle">
   <div class="wrapper">
     <div class="middle_con">
-      <section class="mid_box1"><h2>Basics</h2><p>What CSS is, color, background and fonts.</p><a href="#l1">Lessons 1–4</a></section>
-      <section class="mid_box2"><h2>Box Model</h2><p>Width, height, padding and margin.</p><a href="#l4">Lessons 5–7</a></section>
-      <section class="mid_box3"><h2>Layout</h2><p>Display, flex, float, position.</p><a href="#l8">Lessons 8–11</a></section>
-      <section class="mid_box4"><h2>Advanced</h2><p>z-index, pseudo-elements, selectors, gradients, text.</p><a href="#l14">Lessons 12–17</a></section>
+      <section class="mid_box1"><h2>HTML Basics</h2><p>Tags, headings, links, images, lists and forms.</p><a href="#l18">Lessons 1–6</a></section>
+      <section class="mid_box2"><h2>CSS Basics</h2><p>What CSS is, color, background, fonts and units.</p><a href="#l1">Lessons 7–11</a></section>
+      <section class="mid_box3"><h2>Box Model</h2><p>Width, height, padding, margin and borders.</p><a href="#l4">Lessons 12–15</a></section>
+      <section class="mid_box4"><h2>Layout</h2><p>Display, flex, grid, float and position.</p><a href="#l8">Lessons 16–20</a></section>
+      <section class="mid_box5"><h2>Advanced</h2><p>z-index, pseudo-elements, selectors, gradients, text.</p><a href="#l14">Lessons 21–26</a></section>
+      <section class="mid_box6"><h2>Responsive</h2><p>Hover effects, transitions and media queries.</p><a href="#l27">Lessons 27–28</a></section>
     </div>
   </div>
 </div>
@@ -68,7 +66,113 @@
     <div class="main_con clearfix">
       <main id="top">
 
-        <h2 class="group" id="basics">Basics</h2>
+        <h2 class="group" id="htmlbasics">HTML Basics</h2>
+
+        <section class="lesson" id="l18">
+          <h3>1. The page skeleton</h3>
+          <p>Every web page is built with HTML. HTML uses tags such as <code>&lt;body&gt;</code> to say what each part of the page is. All pages share the same skeleton.</p>
+          <div class="stage"><pre class="skeleton" data-mode="all"><span class="sk-top">&lt;!DOCTYPE html&gt;
+&lt;html&gt;</span>
+<span class="sk-head">  &lt;head&gt;
+    &lt;title&gt;My page&lt;/title&gt;
+  &lt;/head&gt;</span>
+<span class="sk-body">  &lt;body&gt;
+    &lt;h1&gt;Hello!&lt;/h1&gt;
+    &lt;p&gt;Welcome to my page.&lt;/p&gt;
+  &lt;/body&gt;</span>
+<span class="sk-top">&lt;/html&gt;</span></pre></div>
+          <div class="controls">
+            <label>Highlight a part
+              <select data-attr="data-mode" data-target=".skeleton" data-label="part"><option value="all">Show everything</option><option value="head">&lt;head&gt;: info about the page (not shown)</option><option value="body">&lt;body&gt;: everything people see</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l19">
+          <h3>2. Headings and text</h3>
+          <p>Tags mark up the meaning of text. Most tags open (<code>&lt;p&gt;</code>) and close (<code>&lt;/p&gt;</code>) around their content. Pick an element and see how it looks.</p>
+          <div class="stage"><div class="htmldemo target"><h1>Main title</h1></div></div>
+          <div class="controls">
+            <label>Pick an element
+              <select data-html data-target=".htmldemo">
+                <option value='<h1>Main title</h1>'>h1: the main heading</option>
+                <option value='<h2>Section title</h2>'>h2: a section heading</option>
+                <option value='<h3>Smaller heading</h3>'>h3: a smaller heading</option>
+                <option value='<p>This is a paragraph of text.</p>'>p: a paragraph</option>
+                <option value='<p>Some <strong>important</strong> and <em>emphasized</em> words.</p>'>strong and em inside a paragraph</option>
+              </select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l20">
+          <h3>3. Links and images</h3>
+          <p>A link needs an <code>href</code> (where it goes). An image needs a <code>src</code> (which file) and an <code>alt</code> (a description for people who cannot see it). You can even put an image inside a link.</p>
+          <div class="stage"><div class="htmldemo target"><a href="https://example.com">A link to another site</a></div></div>
+          <div class="controls">
+            <label>Pick an element
+              <select data-html data-target=".htmldemo">
+                <option value='<a href="https://example.com">A link to another site</a>'>a: a link</option>
+                <option value='<img src="favicon.svg" alt="CSS Lab logo" width="80">'>img: an image</option>
+                <option value='<img src="favicon.svg" alt="CSS Lab logo" width="40">'>img with a smaller width</option>
+                <option value='<a href="https://example.com"><img src="favicon.svg" alt="Go to example.com" width="60"></a>'>an image that is also a link</option>
+              </select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l21">
+          <h3>4. Lists</h3>
+          <p>Use <code>&lt;ul&gt;</code> for bullets and <code>&lt;ol&gt;</code> for numbers. Every item goes inside an <code>&lt;li&gt;</code>. Menus, like the one at the top of this site, are built from lists too.</p>
+          <div class="stage"><div class="htmldemo target"><ul><li>Apples</li><li>Bananas</li><li>Cherries</li></ul></div></div>
+          <div class="controls">
+            <label>Pick a list
+              <select data-html data-target=".htmldemo">
+                <option value='<ul><li>Apples</li><li>Bananas</li><li>Cherries</li></ul>'>ul: a bulleted list</option>
+                <option value='<ol><li>Apples</li><li>Bananas</li><li>Cherries</li></ol>'>ol: a numbered list</option>
+                <option value='<ul><li>Fruit<ul><li>Apples</li><li>Bananas</li></ul></li><li>Vegetables</li></ul>'>a list inside a list</option>
+              </select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l22">
+          <h3>5. Forms</h3>
+          <p>A form collects information from people. Each field has its own tag, and a <code>&lt;label&gt;</code> tells people what to type. Try each one.</p>
+          <div class="stage"><div class="htmldemo target"><label>Name <input type="text" placeholder="Your name"></label></div></div>
+          <div class="controls">
+            <label>Pick a field
+              <select data-html data-target=".htmldemo">
+                <option value='<label>Name <input type="text" placeholder="Your name"></label>'>input: a text box</option>
+                <option value='<label>Email <input type="email" placeholder="you@example.com"></label>'>input type="email"</option>
+                <option value='<label><input type="checkbox"> Remember me</label>'>input type="checkbox"</option>
+                <option value='<label>City <select><option>Cebu</option><option>Manila</option><option>Davao</option></select></label>'>select: a dropdown</option>
+                <option value='<textarea rows="3" placeholder="Your message"></textarea>'>textarea: a bigger text box</option>
+                <option value='<button type="button">Send</button>'>button</option>
+              </select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l23">
+          <h3>6. Class and id</h3>
+          <p>The <code>class</code> and <code>id</code> attributes connect your HTML to your CSS. The CSS for this demo is shown below. Pick an element and see which rules it gets.</p>
+          <div class="stage"><div class="htmldemo target"><p>No class, no id</p></div></div>
+          <div class="controls">
+            <label>Pick an element
+              <select data-html data-target=".htmldemo">
+                <option value='<p>No class, no id</p>'>p: no class, no id</option>
+                <option value='<p class="note">I have class="note"</p>'>p with class="note"</option>
+                <option value='<p id="intro">I have id="intro"</p>'>p with id="intro"</option>
+                <option value='<p class="note" id="intro">I have both</p>'>p with a class and an id</option>
+              </select></label>
+          </div>
+          <pre class="code">.note  { background: #e0f2fe; border-left: 4px solid #0284c7; }
+#intro { border: 2px dashed #ea580c; }</pre>
+          <pre class="readout"></pre>
+        </section>
+
+        <h2 class="group" id="basics">CSS Basics</h2>
 
         <section class="lesson" id="l1">
           <h3>1. What is CSS?</h3>
@@ -142,6 +246,21 @@ p { color: red; }</pre>
           <pre class="readout"></pre>
         </section>
 
+        <section class="lesson" id="l24">
+          <h3>5. Units: px, %, rem and vw</h3>
+          <p>A size needs a unit. <code>px</code> is fixed. <code>%</code> follows the parent. <code>rem</code> follows the root font size (16px by default). <code>vw</code> is 1% of the screen width. Resize your browser window and watch the numbers.</p>
+          <div class="stage"><div class="unitbox target">Resize the window: some sizes change, some do not.</div></div>
+          <div class="controls">
+            <label>width
+              <select data-prop="width"><option>200px</option><option>50%</option><option>10rem</option><option>40vw</option><option>100%</option></select></label>
+            <label>font-size
+              <select data-prop="font-size"><option>16px</option><option>1rem</option><option>2rem</option><option>150%</option><option>5vw</option></select></label>
+          </div>
+          <p class="measure" data-metric="width" data-label="Box width"></p>
+          <p class="measure" data-metric="fontsize" data-label="Text size"></p>
+          <pre class="readout"></pre>
+        </section>
+
         <h2 class="group" id="boxmodel">Box Model</h2>
 
         <section class="lesson" id="l4">
@@ -179,6 +298,22 @@ p { color: red; }</pre>
           <pre class="readout"></pre>
         </section>
 
+        <section class="lesson" id="l25">
+          <h3>8. Borders and box-sizing</h3>
+          <p>This box is set to <code>width: 200px</code> with <code>padding: 20px</code>. Add a border and watch the total width. With <code>content-box</code> the padding and border are added on top. With <code>border-box</code> they are included.</p>
+          <div class="stage"><div class="borderdemo target">200px wide, 20px padding</div></div>
+          <div class="controls">
+            <label>border-width (px) <input type="range" min="0" max="24" value="4" data-prop="border-width" data-unit="px"></label>
+            <label>border-style
+              <select data-prop="border-style"><option>solid</option><option>dashed</option><option>dotted</option><option>double</option></select></label>
+            <label>box-sizing
+              <select data-prop="box-sizing"><option>content-box</option><option>border-box</option></select></label>
+            <label>border-radius (px) <input type="range" min="0" max="40" value="0" data-prop="border-radius" data-unit="px"></label>
+          </div>
+          <p class="measure" data-metric="width" data-label="Total box width"></p>
+          <pre class="readout"></pre>
+        </section>
+
         <h2 class="group" id="layout">Layout</h2>
 
         <section class="lesson" id="l8">
@@ -207,6 +342,18 @@ p { color: red; }</pre>
               <select data-prop="justify-content"><option>flex-start</option><option>center</option><option>flex-end</option><option>space-between</option><option>space-around</option></select></label>
             <label>align-items
               <select data-prop="align-items"><option>stretch</option><option>flex-start</option><option>center</option><option>flex-end</option></select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l26">
+          <h3>11. CSS Grid</h3>
+          <p>Grid puts items into rows and columns. Put <code>display: grid</code> on the parent, then describe the columns. <code>fr</code> means one share of the free space.</p>
+          <div class="stage"><div class="griddemo target"><div class="box">1</div><div class="box">2</div><div class="box">3</div><div class="box">4</div><div class="box">5</div><div class="box">6</div></div></div>
+          <div class="controls">
+            <label>grid-template-columns
+              <select data-prop="grid-template-columns"><option>1fr 1fr 1fr</option><option>1fr 2fr</option><option>repeat(2, 1fr)</option><option>100px 1fr</option><option>repeat(auto-fit, minmax(90px, 1fr))</option></select></label>
+            <label>gap (px) <input type="range" min="0" max="30" value="8" data-prop="gap" data-unit="px"></label>
           </div>
           <pre class="readout"></pre>
         </section>
@@ -321,20 +468,62 @@ p { color: red; }</pre>
           <pre class="readout"></pre>
         </section>
 
+        <h2 class="group" id="responsive">Responsive &amp; Interactive</h2>
+
+        <section class="lesson" id="l27">
+          <h3>27. :hover and transitions</h3>
+          <p><code>:hover</code> styles an element while the pointer is over it (on a phone, while it is tapped). A <code>transition</code> makes the change animate smoothly. Hover over the button, or tap it.</p>
+          <div class="stage hoverdemo" data-mode="color"><button type="button" class="hbtn">Hover or tap me</button></div>
+          <div class="controls">
+            <label>Hover effect
+              <select data-attr="data-mode" data-target=".hoverdemo" data-label="rule"><option value="color">button:hover { background: pink; }</option><option value="lift">button:hover { transform: translateY(-6px); }</option><option value="grow">button:hover { transform: scale(1.15); }</option><option value="none">(no hover rule)</option></select></label>
+            <label>Transition
+              <select data-prop="transition" data-target=".hbtn" data-literal><option>none</option><option>all .3s ease</option><option>all 1s ease</option></select></label>
+            <label><input type="checkbox" data-class="force" data-target=".hoverdemo"> Show the hover state (for touch screens)</label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l28">
+          <h3>28. Responsive design</h3>
+          <p>A responsive page fits every screen. A media query applies rules only on some screen sizes. This demo is a real page inside a frame. Slide the screen width below 600px and watch the layout switch.</p>
+          <div class="stage resstage"><div class="devwrap"><iframe id="resframe" title="Responsive demo page" scrolling="no"></iframe></div></div>
+          <div class="controls">
+            <label>Screen width (px) <input type="range" id="resW" min="280" max="800" step="10" value="700"></label>
+          </div>
+          <pre class="readout" id="resinfo"></pre>
+          <pre class="code">&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+
+.cards { display: flex; gap: 12px; }
+
+@media (max-width: 600px) {
+  .cards { flex-direction: column; }
+}</pre>
+        </section>
+
       </main>
 
       <aside class="sidebar">
         <h3>Lessons</h3>
         <ol>
+          <li><a href="#l18">The page skeleton</a></li>
+          <li><a href="#l19">Headings &amp; text</a></li>
+          <li><a href="#l20">Links &amp; images</a></li>
+          <li><a href="#l21">Lists</a></li>
+          <li><a href="#l22">Forms</a></li>
+          <li><a href="#l23">Class &amp; id</a></li>
           <li><a href="#l1">What is CSS</a></li>
           <li><a href="#l2">Color</a></li>
           <li><a href="#l3">Background</a></li>
           <li><a href="#l7">Fonts</a></li>
+          <li><a href="#l24">Units</a></li>
           <li><a href="#l4">Width &amp; Height</a></li>
           <li><a href="#l5">Padding</a></li>
           <li><a href="#l6">Margin</a></li>
+          <li><a href="#l25">Borders &amp; box-sizing</a></li>
           <li><a href="#l8">Display</a></li>
           <li><a href="#l9">Flex</a></li>
+          <li><a href="#l26">Grid</a></li>
           <li><a href="#l10">Float &amp; clearfix</a></li>
           <li><a href="#l13">Position</a></li>
           <li><a href="#l14">z-index</a></li>
@@ -343,6 +532,8 @@ p { color: red; }</pre>
           <li><a href="#l15">Selectors</a></li>
           <li><a href="#l16">Gradients</a></li>
           <li><a href="#l17">Text &amp; border-radius</a></li>
+          <li><a href="#l27">:hover &amp; transitions</a></li>
+          <li><a href="#l28">Responsive design</a></li>
         </ol>
       </aside>
     </div>
@@ -361,10 +552,12 @@ p { color: red; }</pre>
     <div class="wrapper footer_btm_con">
       <div class="footer_nav">
         <ul>
-          <li><a href="#basics">Basics</a></li>
-          <li><a href="#boxmodel">Box Model</a></li>
-          <li><a href="#layout">Layout</a></li>
-          <li><a href="#advanced">Advanced</a></li>
+          <li><a href="#htmlbasics">HTML</a></li>
+      <li><a href="#basics">Basics</a></li>
+      <li><a href="#boxmodel">Box Model</a></li>
+      <li><a href="#layout">Layout</a></li>
+      <li><a href="#advanced">Advanced</a></li>
+      <li><a href="#responsive">Responsive</a></li>
         </ul>
       </div>
       <div class="copyright">&copy; CSS Lab</div>

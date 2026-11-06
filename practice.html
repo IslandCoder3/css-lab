@@ -134,7 +134,30 @@ var C = [
     sol: 'position: absolute;\ntop: 0;\nleft: 0;\nright: 0;\nmargin: 0 auto;\nwidth: 57px;',
     ck: [['position is absolute', function (c) { return c.position === 'absolute'; }],
          ['width is 57px', function (c) { return c.width === '57px'; }],
-         ['icon is centered in the parent', function (c, el) { var r = el.getBoundingClientRect(), p = el.parentElement.getBoundingClientRect(); return Math.abs((r.left + r.width / 2) - (p.left + p.width / 2)) < 2 && Math.abs(r.top - p.top) < 2; }]] }
+         ['icon is centered in the parent', function (c, el) { var r = el.getBoundingClientRect(), p = el.parentElement.getBoundingClientRect(); return Math.abs((r.left + r.width / 2) - (p.left + p.width / 2)) < 2 && Math.abs(r.top - p.top) < 2; }]] },
+
+  { t: 'Border', task: 'Give the box a 3px dashed border and rounded corners of 12px.', start: '',
+    html: '<div class="t">Border</div>',
+    hint: 'border takes width, style and color in one go. border-radius rounds the corners.',
+    sol: 'border: 3px dashed #4f46e5;\nborder-radius: 12px;',
+    ck: [['border is 3px wide', function (c) { return c.borderTopWidth === '3px'; }],
+         ['border is dashed', function (c) { return c.borderTopStyle === 'dashed'; }],
+         ['corners are rounded 12px', function (c) { return c.borderTopLeftRadius === '12px'; }]] },
+
+  { t: 'Box-sizing', task: 'This box ends up wider than 200px because of its padding and border. Fix it with ONE change so it is exactly 200px wide in total.', start: 'box-sizing: content-box;\nwidth: 200px;\npadding: 20px;\nborder: 4px solid #4f46e5;',
+    html: '<div class="t">Total width?</div>',
+    hint: 'border-box makes the width include the padding and the border.',
+    sol: 'box-sizing: border-box;\nwidth: 200px;\npadding: 20px;\nborder: 4px solid #4f46e5;',
+    ck: [['box-sizing is border-box', function (c) { return c.boxSizing === 'border-box'; }],
+         ['total width is 200px', function (c, el) { return Math.abs(el.getBoundingClientRect().width - 200) < 1; }]] },
+
+  { t: 'Grid', task: 'Put the three boxes in three equal columns with a 10px gap between them.', start: '',
+    html: '<div class="t flush"><div class="b">1</div><div class="b">2</div><div class="b">3</div></div>',
+    hint: 'display: grid on the parent, grid-template-columns: 1fr 1fr 1fr, and gap.',
+    sol: 'display: grid;\ngrid-template-columns: 1fr 1fr 1fr;\ngap: 10px;',
+    ck: [['display is grid', function (c) { return c.display === 'grid'; }],
+         ['three equal columns', function (c) { var w = c.gridTemplateColumns.split(' ').map(parseFloat); return w.length === 3 && Math.abs(w[0] - w[1]) < 1 && Math.abs(w[1] - w[2]) < 1; }],
+         ['gap is 10px', function (c) { return c.columnGap === '10px'; }]] }
 ];
 
 var solved = [];

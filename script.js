@@ -4,12 +4,29 @@ document.querySelectorAll('.lesson').forEach(function (lesson) {
   var lines = {};
   var propSels = {};
 
-  lesson.querySelectorAll('.controls [data-prop], .controls [data-attr], .controls [data-class]').forEach(function (c) {
+  // Live size readouts: <p class="measure" data-metric="width|fontsize" data-label="...">
+  function measure() {
+    lesson.querySelectorAll('.measure').forEach(function (m) {
+      var t = lesson.querySelector(m.dataset.for || '.target');
+      if (!t) return;
+      var v = m.dataset.metric === 'fontsize' ? parseFloat(getComputedStyle(t).fontSize) : t.getBoundingClientRect().width;
+      m.textContent = (m.dataset.label || 'Size') + ': ' + (Math.round(v * 10) / 10) + 'px';
+    });
+  }
+  measure();
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);   // again once the theme stylesheet has loaded
+
+  lesson.querySelectorAll('.controls [data-prop], .controls [data-attr], .controls [data-class], .controls [data-html]').forEach(function (c) {
     function apply() {
       var targets = lesson.querySelectorAll(c.dataset.target || '.target');
       var v, key;
 
-      if (c.dataset.class) {
+      if (c.hasAttribute('data-html')) {
+        var h = c.value;
+        targets.forEach(function (el) { el.innerHTML = h; });
+        lines['html'] = h;
+      } else if (c.dataset.class) {
         key = c.dataset.class;
         targets.forEach(function (el) { el.classList.toggle(key, c.checked); });
         lines[key] = c.checked ? 'class="' + key + '"' : null;
@@ -22,7 +39,8 @@ document.querySelectorAll('.lesson').forEach(function (lesson) {
         key = c.dataset.prop;
         v = c.value + (c.dataset.unit || '');
         targets.forEach(function (el) { el.style.setProperty(key, v); });
-        propSels[c.dataset.target || '.target'] = 1;
+        if (c.hasAttribute('data-literal')) lines[key] = key + ': ' + v + ';';   // show the value as chosen (no shorthand rewriting)
+        else propSels[c.dataset.target || '.target'] = 1;
       }
 
       // Show what the browser really applied (a shorthand replaces its longhands)
@@ -33,6 +51,7 @@ document.querySelectorAll('.lesson').forEach(function (lesson) {
       });
       var rest = Object.keys(lines).map(function (k) { return lines[k]; }).filter(Boolean);
       out.textContent = css.concat(rest).join('\n');
+      measure();
     }
     c.addEventListener('input', apply);
     c.addEventListener('change', apply);
