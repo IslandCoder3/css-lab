@@ -443,6 +443,13 @@
     fitRes();
   }
 
+  // Keep the current lesson visible inside the sidebar's own scrolling list (never scrolls the page)
+  function keepInView(a) {
+    var ol = side.querySelector('ol'), r = a.getBoundingClientRect(), o = ol.getBoundingClientRect();
+    if (ol.scrollHeight <= ol.clientHeight + 1) return;
+    if (r.top < o.top + 8 || r.bottom > o.bottom - 8) ol.scrollTop += (r.top - o.top) - (o.height / 2) + r.height / 2;
+  }
+
   // Highlight the lesson you are reading in the sidebar
   if ('IntersectionObserver' in window) {
     var spy = new IntersectionObserver(function (es) {
@@ -450,7 +457,7 @@
         if (!e.isIntersecting) return;
         side.querySelectorAll('a.now').forEach(function (a) { a.classList.remove('now'); });
         var a = side.querySelector('a[href="#' + e.target.id + '"]');
-        if (a) a.classList.add('now');
+        if (a) { a.classList.add('now'); keepInView(a); }
       });
     }, { rootMargin: '-40% 0px -55% 0px' });
     lessons.forEach(function (s) { spy.observe(s); });

@@ -375,3 +375,23 @@ html[data-theme="dark"] .gmsg.good{color:#6ee7b7}
 [data-g="html"] .readout:empty::before{content:"Move a control to see the HTML you just built"}
 .footer_nav ul{flex-wrap:wrap;row-gap:8px}
 .chal_actions a.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;min-height:44px;margin-top:0;flex:1 1 auto}
+
+/* ===== Readouts: comfortable, colored code ===== */
+.readout{padding:14px 18px;font-size:13.5px;line-height:1.75;white-space:pre;overflow-x:auto;tab-size:2}
+.readout[data-kind]::before{display:block;width:max-content;margin:0 0 8px;padding:2px 10px;border-radius:99px;font:800 .62rem/1.6 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;background:var(--g,var(--c1));color:#fff}
+.readout[data-kind="html"]::before{content:"HTML you built"}
+.readout[data-kind="css"]::before{content:"CSS you wrote"}
+.readout .hx-p{color:#7c89a6}
+.readout .hx-t{color:#f9a8d4}
+.readout .hx-a{color:#7dd3fc}
+.readout .hx-v{color:#fde68a}
+#resinfo{white-space:pre-wrap}
+
+/* ===== Sidebar: the lesson list scrolls inside the sidebar (it is taller than the screen) ===== */
+@media (min-width:861px){
+  .sidebar{display:flex;flex-direction:column;max-height:calc(100vh - 96px)}
+  .sidebar ol{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-right:8px;margin-right:-8px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+  .sidebar ol::-webkit-scrollbar{width:6px}
+  .sidebar ol::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px}
+  .sidebar .reset{flex:0 0 auto;align-self:flex-start}
+}
