@@ -395,3 +395,7 @@ html[data-theme="dark"] .gmsg.good{color:#6ee7b7}
   .sidebar ol::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px}
   .sidebar .reset{flex:0 0 auto;align-self:flex-start}
 }
+
+.drillrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);text-decoration:none}
+.drillrow span{flex:0 0 auto;color:var(--c1);font-weight:800;font-size:.9rem}
+.drillrow:hover{border-color:var(--c1)}

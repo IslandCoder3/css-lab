@@ -135,3 +135,9 @@ footer{background:var(--ink);color:#cbd5e1}
 [data-mode="icon"] .icon_h::before{content:"";position:absolute;top:0;left:0;right:0;margin:0 auto;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#22d3ee)}
 .txtdemo{width:180px;height:180px;padding:14px;background:#c7d2fe;border:2px solid var(--brand);color:#1e1b4b;line-height:1.4}
 #l17 .stage{overflow-x:auto}
+
+/* Sticky footer: on short pages the footer sits at the bottom of the window; on long pages it follows the content */
+.protect-me > .clearfix{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+.protect-me > .clearfix::before,.protect-me > .clearfix::after{display:none}
+.protect-me > .clearfix > #main_area{flex:1 0 auto}
+.protect-me > .clearfix > header,.protect-me > .clearfix > #nav_area,.protect-me > .clearfix > footer{flex-shrink:0}

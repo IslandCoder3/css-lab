@@ -311,11 +311,13 @@
   var TITLES = { l1: 'What is CSS', l2: 'Color', l3: 'Background', l4: 'Width & Height', l5: 'Padding', l6: 'Margin', l7: 'Fonts', l8: 'Display', l9: 'Flex', l10: 'Float & clearfix', l11: '::before & ::after', l12: ':nth-child', l13: 'Position', l14: 'z-index', l15: 'CSS selectors', l16: 'Gradients', l17: 'Text & border-radius', l18: 'The page skeleton', l19: 'Headings & text', l20: 'Links & images', l21: 'Lists', l22: 'Forms', l23: 'Class & id', l24: 'Units', l25: 'Borders & box-sizing', l26: 'CSS Grid', l27: ':hover & transitions', l28: 'Responsive design' };
   function getMissed() { return load('csslab-missed', {}); }
   function setMissed(m) { save('csslab-missed', m); paintBadge(); }
+  function getDrills() { return load('csslab-missed-drills', {}); }
+  function setDrills(m) { save('csslab-missed-drills', m); paintBadge(); }
   function paintBadge() {
-    var n = Object.keys(getMissed()).length;
+    var n = Object.keys(getMissed()).length + Object.keys(getDrills()).length;
     if (reviewLink) reviewLink.textContent = n ? 'Review (' + n + ')' : 'Review';
   }
-  window.CSSLAB = { DATA: DATA, TITLES: TITLES, getMissed: getMissed, setMissed: setMissed };
+  window.CSSLAB = { DATA: DATA, TITLES: TITLES, getMissed: getMissed, setMissed: setMissed, getDrills: getDrills, setDrills: setDrills };
 
   // Links and forms inside the HTML demos should not navigate away
   document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.htmldemo a')) e.preventDefault(); });
@@ -351,7 +353,7 @@
   var reset = el('button', 'reset', 'Reset progress'); reset.type = 'button';
   reset.addEventListener('click', function () {
     if (confirm('Clear all lesson and practice progress?')) {
-      try { localStorage.removeItem('csslab-done'); localStorage.removeItem('csslab-practice'); localStorage.removeItem('csslab-capstone'); localStorage.removeItem('csslab-missed'); } catch (e) {}
+      try { localStorage.removeItem('csslab-done'); localStorage.removeItem('csslab-practice'); localStorage.removeItem('csslab-capstone'); localStorage.removeItem('csslab-missed'); localStorage.removeItem('csslab-missed-drills'); } catch (e) {}
       location.reload();
     }
   });

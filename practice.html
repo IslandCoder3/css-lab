@@ -170,6 +170,7 @@ function updateCount() { count.textContent = solved.length + ' / ' + C.length + 
 
 C.forEach(function (d, i) {
   var card = el('section', 'card chal');
+  card.id = 'drill-' + (i + 1);
   card.appendChild(el('h3', '', (i + 1) + '. ' + d.t));
   card.appendChild(el('p', '', d.task));
 
@@ -208,6 +209,9 @@ C.forEach(function (d, i) {
       if (!ok) all = false;
       res.appendChild(el('li', ok ? 'ok' : '', k[0]));
     });
+    var dm = window.CSSLAB.getDrills();
+    if (all) delete dm[i]; else dm[i] = { n: ((dm[i] && dm[i].n) || 0) + 1, t: d.t };
+    window.CSSLAB.setDrills(dm);
     if (all) {
       card.classList.add('pass');
       if (solved.indexOf(i) < 0) {
