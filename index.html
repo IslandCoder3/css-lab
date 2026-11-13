@@ -20,7 +20,7 @@
   <div class="wrapper">
     <div class="header_con">
       <div class="main_logo"><a href="#top">CSS <span>Lab</span></a></div>
-      <div class="head_info">28 lessons · learn by doing</div>
+      <div class="head_info">31 lessons · learn by doing</div>
     </div>
   </div>
 </header>
@@ -41,7 +41,7 @@
       <h1>Learn CSS <span>by breaking it</span></h1>
       <p>Live demos, the rules that matter, practice drills and a capstone where you rebuild a full page yourself.</p>
       <a href="#l1">Start Lesson 1</a><a class="ghost" href="capstone.html">Jump to the capstone</a>
-      <div class="stats"><div><b>28</b><span>Lessons</span></div><div><b>15</b><span>Drills</span></div><div><b>9</b><span>Game levels</span></div><div><b>16</b><span>Quiz questions</span></div></div>
+      <div class="stats"><div><b>31</b><span>Lessons</span></div><div><b>15</b><span>Drills</span></div><div><b>9</b><span>Game levels</span></div><div><b>20</b><span>Quiz questions</span></div></div>
     </div>
   </div>
 </div>
@@ -50,12 +50,12 @@
 <div id="middle">
   <div class="wrapper">
     <div class="middle_con">
-      <section class="mid_box1"><h2>HTML Basics</h2><p>Tags, headings, links, images, lists and forms.</p><a href="#l18">Lessons 1–6</a></section>
-      <section class="mid_box2"><h2>CSS Basics</h2><p>What CSS is, color, background, fonts and units.</p><a href="#l1">Lessons 7–11</a></section>
-      <section class="mid_box3"><h2>Box Model</h2><p>Width, height, padding, margin and borders.</p><a href="#l4">Lessons 12–15</a></section>
-      <section class="mid_box4"><h2>Layout</h2><p>Display, flex, grid, float and position.</p><a href="#l8">Lessons 16–20</a></section>
-      <section class="mid_box5"><h2>Advanced</h2><p>z-index, pseudo-elements, selectors, gradients, text.</p><a href="#l14">Lessons 21–26</a></section>
-      <section class="mid_box6"><h2>Responsive</h2><p>Hover effects, transitions and media queries.</p><a href="#l27">Lessons 27–28</a></section>
+      <section class="mid_box1"><h2>HTML Basics</h2><p>Tags, tables, forms, media and page structure.</p><a href="#l18">Lessons 1–9</a></section>
+      <section class="mid_box2"><h2>CSS Basics</h2><p>What CSS is, color, background, fonts and units.</p><a href="#l1">Lessons 10–14</a></section>
+      <section class="mid_box3"><h2>Box Model</h2><p>Width, height, padding, margin and borders.</p><a href="#l4">Lessons 15–18</a></section>
+      <section class="mid_box4"><h2>Layout</h2><p>Display, flex, grid, float and position.</p><a href="#l8">Lessons 19–23</a></section>
+      <section class="mid_box5"><h2>Advanced</h2><p>z-index, pseudo-elements, selectors, gradients, text.</p><a href="#l14">Lessons 24–29</a></section>
+      <section class="mid_box6"><h2>Responsive</h2><p>Hover effects, transitions and media queries.</p><a href="#l27">Lessons 30–31</a></section>
     </div>
   </div>
 </div>
@@ -136,6 +136,22 @@
           <pre class="readout"></pre>
         </section>
 
+        <section class="lesson" id="l29">
+          <h3>5. Tables</h3>
+          <p>A table shows data in rows and columns. <code>&lt;tr&gt;</code> is a row, <code>&lt;th&gt;</code> a header cell and <code>&lt;td&gt;</code> a normal cell. Use tables for data, never for page layout.</p>
+          <div class="stage"><div class="htmldemo target"><table><thead><tr><th>Name</th><th>City</th></tr></thead><tbody><tr><td>Ana</td><td>Cebu</td></tr><tr><td>Ben</td><td>Manila</td></tr></tbody></table></div></div>
+          <div class="controls">
+            <label>Pick a table
+              <select data-html data-target=".htmldemo">
+                <option value='<table><thead><tr><th>Name</th><th>City</th></tr></thead><tbody><tr><td>Ana</td><td>Cebu</td></tr><tr><td>Ben</td><td>Manila</td></tr></tbody></table>'>a table with a header row</option>
+                <option value='<table><caption>Students</caption><thead><tr><th>Name</th><th>City</th></tr></thead><tbody><tr><td>Ana</td><td>Cebu</td></tr><tr><td>Ben</td><td>Manila</td></tr></tbody></table>'>add a caption (the table title)</option>
+                <option value='<table><thead><tr><th colspan="2">Team</th></tr></thead><tbody><tr><td>Ana</td><td>Cebu</td></tr><tr><td>Ben</td><td>Manila</td></tr></tbody></table>'>a header cell spanning 2 columns (colspan)</option>
+                <option value='<table><tbody><tr><td>Ana</td><td>Cebu</td></tr><tr><td>Ben</td><td>Manila</td></tr></tbody></table>'>no header row (only td cells)</option>
+              </select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
         <section class="lesson" id="l22">
           <h3>5. Forms</h3>
           <p>A form collects information from people. Each field has its own tag, and a <code>&lt;label&gt;</code> tells people what to type. Try each one.</p>
@@ -149,6 +165,37 @@
                 <option value='<label>City <select><option>Cebu</option><option>Manila</option><option>Davao</option></select></label>'>select: a dropdown</option>
                 <option value='<textarea rows="3" placeholder="Your message"></textarea>'>textarea: a bigger text box</option>
                 <option value='<button type="button">Send</button>'>button</option>
+              </select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l30">
+          <h3>7. Audio, video and figures</h3>
+          <p>Players need the <code>controls</code> attribute so people can press play. List one or more <code>&lt;source&gt;</code> files so every browser can pick a format it supports. A <code>&lt;figure&gt;</code> adds a caption to an image.</p>
+          <div class="stage"><div class="htmldemo target"><video controls width="240"><source src="media/sample.webm" type="video/webm"><source src="media/sample.mp4" type="video/mp4">Your browser does not support video.</video></div></div>
+          <div class="controls">
+            <label>Pick an element
+              <select data-html data-target=".htmldemo">
+                <option value='<video controls width="240"><source src="media/sample.webm" type="video/webm"><source src="media/sample.mp4" type="video/mp4">Your browser does not support video.</video>'>video: a video player</option>
+                <option value='<audio controls><source src="media/sample.wav" type="audio/wav">Your browser does not support audio.</audio>'>audio: a sound player</option>
+                <option value='<figure><img src="favicon.svg" alt="CSS Lab logo" width="80"><figcaption>The CSS Lab logo</figcaption></figure>'>figure: an image with a caption</option>
+              </select></label>
+          </div>
+          <pre class="readout"></pre>
+        </section>
+
+        <section class="lesson" id="l31">
+          <h3>8. Page structure tags</h3>
+          <p>Semantic tags describe what each part of a page is: <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code> and <code>&lt;footer&gt;</code>. They look like plain <code>&lt;div&gt;</code>s, but screen readers and search engines understand them. Each box below is labelled with its tag.</p>
+          <div class="stage"><div class="htmldemo target"><header>Header</header><nav>Navigation</nav><main><section>Section</section><aside>Sidebar</aside></main><footer>Footer</footer></div></div>
+          <div class="controls">
+            <label>Pick a layout
+              <select data-html data-target=".htmldemo">
+                <option value='<header>Header</header><nav>Navigation</nav><main><section>Section</section><aside>Sidebar</aside></main><footer>Footer</footer>'>semantic tags</option>
+                <option value='<div class="header">Header</div><div class="nav">Navigation</div><div class="main"><div class="section">Section</div><div class="aside">Sidebar</div></div><div class="footer">Footer</div>'>only divs (harder to read)</option>
+                <option value='<main><article><h2>Blog post</h2><p>The text of the post.</p></article></main>'>an article inside main</option>
+                <option value='<nav><a href="#">Home</a> <a href="#">About</a> <a href="#">Contact</a></nav>'>nav with links</option>
               </select></label>
           </div>
           <pre class="readout"></pre>
@@ -487,7 +534,7 @@ p { color: red; }</pre>
         <section class="lesson" id="l28">
           <h3>28. Responsive design</h3>
           <p>A responsive page fits every screen. A media query applies rules only on some screen sizes. This demo is a real page inside a frame. Slide the screen width below 600px and watch the layout switch.</p>
-          <div class="stage resstage"><div class="devwrap"><iframe id="resframe" title="Responsive demo page" scrolling="no"></iframe></div></div>
+          <div class="stage resstage"><div class="devwrap"><iframe id="resframe" title="Responsive demo page" scrolling="no" tabindex="-1"></iframe></div></div>
           <div class="controls">
             <label>Screen width (px) <input type="range" id="resW" min="280" max="800" step="10" value="700"></label>
           </div>
@@ -510,7 +557,10 @@ p { color: red; }</pre>
           <li><a href="#l19">Headings &amp; text</a></li>
           <li><a href="#l20">Links &amp; images</a></li>
           <li><a href="#l21">Lists</a></li>
+          <li><a href="#l29">Tables</a></li>
           <li><a href="#l22">Forms</a></li>
+          <li><a href="#l30">Audio, video &amp; figures</a></li>
+          <li><a href="#l31">Page structure tags</a></li>
           <li><a href="#l23">Class &amp; id</a></li>
           <li><a href="#l1">What is CSS</a></li>
           <li><a href="#l2">Color</a></li>

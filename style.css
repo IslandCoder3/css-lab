@@ -3,7 +3,7 @@
 html{scroll-behavior:smooth}
 body{margin:0;font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg)}
 img{max-width:100%}
-a{color:var(--brand)}
+a{color:var(--link,var(--brand))}
 code{background:#eef0ff;padding:1px 6px;border-radius:4px;font-size:.9em}
 .wrapper{width:min(1100px,92%);margin:0 auto}
 .clearfix::after{content:"";display:table;clear:both}
@@ -42,7 +42,7 @@ header{background:#fff;border-bottom:1px solid var(--line)}
 
 /* Main (float + clearfix) */
 #main_area{padding:40px 0}
-main{float:left;width:70%}
+.main_con > main{float:left;width:70%}
 .sidebar{float:right;width:27%;position:sticky;top:64px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
 .sidebar h3{margin:0 0 8px}
 .sidebar ol{margin:0;padding-left:20px}
@@ -78,8 +78,8 @@ pre{margin:0;border-radius:8px;font:13px/1.5 ui-monospace,Consolas,monospace;whi
 .posdemo .alt{background:#f59e0b}
 .zdemo{position:relative;height:170px}
 .zbox{position:absolute;width:130px;height:90px;padding:8px;color:#fff;border-radius:8px;font-weight:700}
-.za{left:10px;top:10px;background:#ef4444;z-index:1}
-.zb{left:70px;top:40px;background:#16a34a;position:absolute}
+.za{left:10px;top:10px;background:#dc2626;z-index:1}
+.zb{left:70px;top:40px;background:#15803d;position:absolute}
 .zc{left:130px;top:70px;background:#2563eb;z-index:3}
 .pdemo{font-size:1.2rem}
 [data-mode="on"] .tagged::before{content:"★ ";color:#f59e0b}
@@ -117,7 +117,7 @@ footer{background:var(--ink);color:#cbd5e1}
 
 /* Responsive */
 @media (max-width:860px){
-  main,.sidebar{float:none;width:100%}
+  .main_con > main,.sidebar{float:none;width:100%}
   .sidebar{position:static;margin-top:24px}
   .middle_con{flex-direction:column;margin-top:-40px}
   .bnr_info h1{font-size:2rem}

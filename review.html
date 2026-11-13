@@ -30,7 +30,7 @@
 <div id="main_area"><div class="wrapper">
   <section class="card" style="margin:0 auto 18px">
     <h1>Review your mistakes</h1>
-    <p>Mistakes come back here: lesson check questions and quiz questions you missed, and practice drills you have not passed yet. Answer a question correctly (or pass the drill) and it leaves your list.</p>
+    <p>Mistakes come back here: lesson check questions, quiz questions and game blanks you missed, and practice drills you have not passed yet. Answer a question correctly (or pass the drill) and it leaves your list.</p>
     <div class="gmsg bad" id="rvwarn" hidden>Your browser is blocking saved data (private mode or blocked storage), so mistakes cannot be saved here.</div>
     <span class="counter" id="rvcount"></span>
   </section>
@@ -48,8 +48,9 @@
 <script src="script.js"></script>
 <script src="project.js"></script>
 <script src="quiz-data.js"></script>
+<script src="game-data.js"></script>
 <script>
-var C = window.CSSLAB, DATA = C.DATA, T = C.TITLES, QZ = window.QUIZ_Q || [];
+var C = window.CSSLAB, DATA = C.DATA, T = C.TITLES, QZ = window.QUIZ_Q || [], GL = window.GAME_LEVELS || [];
 var box = document.getElementById('rv'), count = document.getElementById('rvcount'), dbox = document.getElementById('rvdrills');
 var queue = [], idx = 0, cleared = 0, answered = false;
 
@@ -63,6 +64,12 @@ function item(id) {
   if (/^l\d+$/.test(id) && DATA[id]) { var d = DATA[id]; return { q: d[1], opts: d[2], ok: d[3], note: d[0], noteLabel: 'Remember', fromLabel: 'From the lesson: ', from: T[id], href: 'index.html#' + id }; }
   var m = /^q(\d+)$/.exec(id);
   if (m && QZ[+m[1]]) { var z = QZ[+m[1]]; return { q: z[0], opts: z[1], ok: z[2], note: z[3], noteLabel: 'Explanation', fromLabel: 'From the quiz: ', from: 'question ' + (+m[1] + 1), href: 'quiz.html' }; }
+  var g = /^g(\d+)-(\d+)$/.exec(id);
+  if (g && GL[+g[1]] && GL[+g[1]].slots[+g[2]]) {
+    var L = GL[+g[1]], si = +g[2], s = L.slots[si], answers = [].concat(s.a);
+    var code = L.code.map(function (line) { return line.replace(/\{(\d)\}/g, function (_, n) { return +n === si ? '_____' : [].concat(L.slots[+n].a)[0]; }); }).join('\n');
+    return { q: 'Which value belongs in the blank?', code: code, opts: s.o, ok: answers.map(function (v) { return s.o.indexOf(v); }), note: s.tip, noteLabel: 'Why', fromLabel: 'From the game: ', from: 'Level ' + (+g[1] + 1) + ', ' + L.t, href: 'capstone.html' };
+  }
   return null;
 }
 function pending() { return Object.keys(C.getMissed()).filter(function (id) { return item(id); }); }
@@ -104,6 +111,7 @@ function render() {
   var a = el('a', '', it.from); a.href = it.href; from.appendChild(a);
   box.appendChild(from);
   box.appendChild(el('h3', 'gtitle', it.q));
+  if (it.code) { var cb = el('pre', 'codebox flat'); cb.textContent = it.code; box.appendChild(cb); }
 
   var note = el('div', 'remember'); note.hidden = true;
   note.appendChild(el('b', '', it.noteLabel)); note.appendChild(document.createTextNode(it.note));
@@ -119,8 +127,8 @@ function render() {
     var b = el('button', 'q_opt', o.t); b.type = 'button';
     b.addEventListener('click', function () {
       if (answered) return; answered = true;
-      var ok = o.i === it.ok;
-      opts.forEach(function (x) { x.b.disabled = true; if (x.o.i === it.ok) x.b.classList.add('right'); });
+      var ok = [].concat(it.ok).indexOf(o.i) > -1;
+      opts.forEach(function (x) { x.b.disabled = true; if ([].concat(it.ok).indexOf(x.o.i) > -1) x.b.classList.add('right'); });
       var m = C.getMissed();
       if (ok) {
         cleared++; delete m[id];
@@ -147,7 +155,7 @@ function empty() {
   box.appendChild(el('h3', 'gtitle', hasDrills ? 'No questions to review' : 'Nothing to review right now'));
   box.appendChild(el('p', 'goal', hasDrills
     ? 'Your missed questions are all cleared. You still have practice drills to try again below.'
-    : 'When you miss a lesson check question or a quiz question, it is saved here so you can practice it again. Practice drills you have not passed yet show up here too.'));
+    : 'When you miss a lesson check question, a quiz question or a blank in the game, it is saved here so you can practice it again. Practice drills you have not passed yet show up here too.'));
   var acts = el('div', 'chal_actions'); var a = el('a', 'btn primary', 'Go to the lessons'); a.href = 'index.html'; acts.appendChild(a); box.appendChild(acts);
 }
 

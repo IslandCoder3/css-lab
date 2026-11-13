@@ -1,5 +1,5 @@
 // ---- Readout display helpers: indented, colored code instead of one cramped line ----
-var BLOCK_TAGS = { ul: 1, ol: 1, li: 1, div: 1, p: 1, h1: 1, h2: 1, h3: 1, h4: 1, h5: 1, h6: 1, select: 1, option: 1, form: 1 };
+var BLOCK_TAGS = { ul: 1, ol: 1, li: 1, div: 1, p: 1, h1: 1, h2: 1, h3: 1, h4: 1, h5: 1, h6: 1, select: 1, option: 1, form: 1, table: 1, thead: 1, tbody: 1, tfoot: 1, tr: 1, th: 1, td: 1, caption: 1, figure: 1, figcaption: 1, header: 1, nav: 1, main: 1, section: 1, article: 1, aside: 1, footer: 1, video: 1, audio: 1, source: 1 };
 
 function prettyHtml(html) {
   var box = document.createElement('div'), out = [];
@@ -18,7 +18,8 @@ function prettyHtml(html) {
     out.push(pad + '</' + n.tagName.toLowerCase() + '>');
   }
   Array.prototype.forEach.call(box.childNodes, function (n) { walk(n, 0); });
-  return out.join('\n');
+  // The browser writes boolean attributes as controls=""; show them the way people type them
+  return out.join('\n').replace(/\s(controls|autoplay|loop|muted|disabled|checked|selected|required|readonly|hidden|open)=""/g, ' $1');
 }
 
 function hx(cls, text) { var s = document.createElement('span'); s.className = cls; s.textContent = text; return s; }
