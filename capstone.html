@@ -69,6 +69,7 @@
 
 <script src="script.js"></script>
 <script src="project.js"></script>
+<script src="search.js"></script>
 <script src="game-data.js"></script>
 <script>
 var RESET = `*,*:before,*:after{box-sizing:border-box}
@@ -200,7 +201,7 @@ function renderCard() {
   var top = el('div', 'gtop'); top.appendChild(el('span', 'step_chip', 'Level ' + (cur + 1) + ' of ' + LEVELS.length));
   if (solved) top.appendChild(el('span', 'gstars', starsText(state.stars[cur])));
   card.appendChild(top);
-  card.appendChild(el('h3', 'gtitle', L.t));
+  card.appendChild(el('h2', 'gtitle', L.t));
   var bl = el('div', 'botline'); bl.appendChild(el('span', 'botav', '</>')); bl.appendChild(el('p', 'bubble', L.bot)); card.appendChild(bl);
 
   var cb = el('div', 'codebox');
@@ -273,7 +274,7 @@ function lockIn() {
 function renderFinal() {
   var stars = state.stars.reduce(function (a, b) { return a + b; }, 0);
   card.appendChild(el('span', 'step_chip', 'Quest complete'));
-  card.appendChild(el('h3', 'gtitle', 'You built the whole page!'));
+  card.appendChild(el('h2', 'gtitle', 'You built the whole page!'));
   card.appendChild(el('p', 'bubble', 'Every part of the page is now styled with CSS you chose yourself. Rank: ' + rankName(LEVELS.length) + '.'));
   card.appendChild(el('div', 'bigstars', '\u2605 ' + stars + ' / ' + LEVELS.length * 3));
   var bs = el('div', 'badges');

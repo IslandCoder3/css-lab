@@ -45,120 +45,10 @@
 
 <script src="script.js"></script>
 <script src="project.js"></script>
+<script src="search.js"></script>
+<script src="practice-data.js"></script>
 <script>
-var C = [
-  { t: 'Color', task: 'Make the text red and the background yellow.', start: '',
-    html: '<div class="t">Style me</div>',
-    hint: 'You need two declarations: color and background-color.',
-    sol: 'color: red;\nbackground-color: yellow;',
-    ck: [['text is red', function (c) { return c.color === 'rgb(255, 0, 0)'; }],
-         ['background is yellow', function (c) { return c.backgroundColor === 'rgb(255, 255, 0)'; }]] },
-
-  { t: 'Box model', task: 'Give the box a width of 200px, padding of 20px and a margin of 10px.', start: '',
-    html: '<div class="t">Box</div>',
-    hint: 'width, padding and margin, each with a px value.',
-    sol: 'width: 200px;\npadding: 20px;\nmargin: 10px;',
-    ck: [['width is 200px', function (c) { return c.width === '200px'; }],
-         ['padding is 20px', function (c) { return c.paddingTop === '20px' && c.paddingLeft === '20px'; }],
-         ['margin is 10px', function (c) { return c.marginTop === '10px' && c.marginLeft === '10px'; }]] },
-
-  { t: 'Fonts', task: 'Set the font to Georgia (with serif as a fallback), 24px, and bold.', start: '',
-    html: '<div class="t">The quick brown fox</div>',
-    hint: 'font-family takes a comma-separated list. Bold is font-weight: 700 (or bold).',
-    sol: 'font-family: Georgia, serif;\nfont-size: 24px;\nfont-weight: 700;',
-    ck: [['font is Georgia', function (c) { return /georgia/i.test(c.fontFamily); }],
-         ['size is 24px', function (c) { return c.fontSize === '24px'; }],
-         ['weight is bold', function (c) { return c.fontWeight === '700'; }]] },
-
-  { t: 'Flex: center items', task: 'Line the three boxes up in a row, centered horizontally.', start: '',
-    html: '<div class="t"><div class="b">1</div><div class="b">2</div><div class="b">3</div></div>',
-    hint: 'Flex rules go on the parent. You need display and justify-content.',
-    sol: 'display: flex;\njustify-content: center;',
-    ck: [['display is flex', function (c) { return c.display === 'flex'; }],
-         ['items are centered', function (c) { return c.justifyContent === 'center'; }]] },
-
-  { t: 'Flex: change direction', task: 'Stack the boxes vertically with the first at the top and the last at the bottom.', start: 'display: flex;\nheight: 200px;',
-    html: '<div class="t"><div class="b">1</div><div class="b">2</div><div class="b">3</div></div>',
-    hint: 'flex-direction changes the main axis. justify-content then works vertically.',
-    sol: 'display: flex;\nheight: 200px;\nflex-direction: column;\njustify-content: space-between;',
-    ck: [['direction is column', function (c) { return c.flexDirection === 'column'; }],
-         ['space-between is set', function (c) { return c.justifyContent === 'space-between'; }]] },
-
-  { t: 'Position', task: 'Place the box 20px from the top and 30px from the left of its parent (the parent is already position: relative).', start: '',
-    html: '<div class="wrap"><div class="t">Move me</div></div>',
-    hint: 'top and left only work on positioned elements. absolute is the right fit here.',
-    sol: 'position: absolute;\ntop: 20px;\nleft: 30px;',
-    ck: [['position is absolute', function (c) { return c.position === 'absolute'; }],
-         ['top is 20px', function (c) { return c.top === '20px'; }],
-         ['left is 30px', function (c) { return c.left === '30px'; }]] },
-
-  { t: 'z-index', task: 'The orange box covers the blue one. Bring the blue box to the front.', start: '',
-    html: '<div class="wrap"><div class="t zt">Blue</div><div class="o">Orange (z 5)</div></div>',
-    hint: 'z-index does nothing on a static element. Position it first, then use a number above 5.',
-    sol: 'position: relative;\nz-index: 10;',
-    ck: [['blue is positioned', function (c) { return c.position !== 'static'; }],
-         ['z-index is above 5', function (c) { return parseInt(c.zIndex, 10) > 5; }]] },
-
-  { t: 'Gradient', task: 'Give the box a linear gradient background.', start: 'height: 120px;',
-    html: '<div class="t">Gradient</div>',
-    hint: 'A gradient is an image, so it goes in background-image.',
-    sol: 'height: 120px;\nbackground-image: linear-gradient(90deg, #f6d365, #fda085);',
-    ck: [['uses linear-gradient', function (c) { return /linear-gradient/.test(c.backgroundImage); }]] },
-
-  { t: 'Padding shorthand', task: 'Using ONE padding declaration (3 values), set top 20px, left and right 15px, and bottom 0.', start: '',
-    html: '<div class="t">Padding</div>',
-    hint: 'Three values mean: top, left and right, bottom.',
-    sol: 'padding: 20px 15px 0;',
-    ck: [['top is 20px', function (c) { return c.paddingTop === '20px'; }],
-         ['left and right are 15px', function (c) { return c.paddingLeft === '15px' && c.paddingRight === '15px'; }],
-         ['bottom is 0', function (c) { return c.paddingBottom === '0px'; }]] },
-
-  { t: 'Center a block', task: 'Make the box 200px wide and center it horizontally.', start: '',
-    html: '<div class="t">Center me</div>',
-    hint: 'Give it a width, then margin: 0 auto.',
-    sol: 'width: 200px;\nmargin: 0 auto;',
-    ck: [['width is 200px', function (c) { return c.width === '200px'; }],
-         ['left and right margins are equal and not 0', function (c) { return c.marginLeft === c.marginRight && parseFloat(c.marginLeft) > 0; }]] },
-
-  { t: 'Balanced inline-blocks', sel: '.b', task: 'These rules are applied to all three boxes. Put them side by side, aligned to the top, each 32% wide.', start: '',
-    html: '<div class="t flush"><div class="b">1</div><div class="b">2</div><div class="b">3</div></div>',
-    hint: 'display: inline-block, vertical-align: top, and the width the course uses for 3 boxes.',
-    sol: 'display: inline-block;\nvertical-align: top;\nwidth: 32%;',
-    ck: [['display is inline-block', function (c) { return c.display === 'inline-block'; }],
-         ['vertical-align is top', function (c) { return c.verticalAlign === 'top'; }],
-         ['width is 32% of the parent', function (c, el) { var p = el.parentElement, ps = getComputedStyle(p), pw = p.clientWidth - parseFloat(ps.paddingLeft) - parseFloat(ps.paddingRight); return Math.abs(parseFloat(c.width) - pw * 0.32) < 3; }]] },
-
-  { t: 'Icon recipe', task: 'Center a 57px-wide icon at the top of its relative parent, using the absolute-position recipe.', start: '',
-    html: '<div class="wrap"><div class="t">Icon</div></div>',
-    hint: 'position: absolute with top: 0; left: 0; right: 0; and margin: 0 auto. It needs a width.',
-    sol: 'position: absolute;\ntop: 0;\nleft: 0;\nright: 0;\nmargin: 0 auto;\nwidth: 57px;',
-    ck: [['position is absolute', function (c) { return c.position === 'absolute'; }],
-         ['width is 57px', function (c) { return c.width === '57px'; }],
-         ['icon is centered in the parent', function (c, el) { var r = el.getBoundingClientRect(), p = el.parentElement.getBoundingClientRect(); return Math.abs((r.left + r.width / 2) - (p.left + p.width / 2)) < 2 && Math.abs(r.top - p.top) < 2; }]] },
-
-  { t: 'Border', task: 'Give the box a 3px dashed border and rounded corners of 12px.', start: '',
-    html: '<div class="t">Border</div>',
-    hint: 'border takes width, style and color in one go. border-radius rounds the corners.',
-    sol: 'border: 3px dashed #4f46e5;\nborder-radius: 12px;',
-    ck: [['border is 3px wide', function (c) { return c.borderTopWidth === '3px'; }],
-         ['border is dashed', function (c) { return c.borderTopStyle === 'dashed'; }],
-         ['corners are rounded 12px', function (c) { return c.borderTopLeftRadius === '12px'; }]] },
-
-  { t: 'Box-sizing', task: 'This box ends up wider than 200px because of its padding and border. Fix it with ONE change so it is exactly 200px wide in total.', start: 'box-sizing: content-box;\nwidth: 200px;\npadding: 20px;\nborder: 4px solid #4f46e5;',
-    html: '<div class="t">Total width?</div>',
-    hint: 'border-box makes the width include the padding and the border.',
-    sol: 'box-sizing: border-box;\nwidth: 200px;\npadding: 20px;\nborder: 4px solid #4f46e5;',
-    ck: [['box-sizing is border-box', function (c) { return c.boxSizing === 'border-box'; }],
-         ['total width is 200px', function (c, el) { return Math.abs(el.getBoundingClientRect().width - 200) < 1; }]] },
-
-  { t: 'Grid', task: 'Put the three boxes in three equal columns with a 10px gap between them.', start: '',
-    html: '<div class="t flush"><div class="b">1</div><div class="b">2</div><div class="b">3</div></div>',
-    hint: 'display: grid on the parent, grid-template-columns: 1fr 1fr 1fr, and gap.',
-    sol: 'display: grid;\ngrid-template-columns: 1fr 1fr 1fr;\ngap: 10px;',
-    ck: [['display is grid', function (c) { return c.display === 'grid'; }],
-         ['three equal columns', function (c) { var w = c.gridTemplateColumns.split(' ').map(parseFloat); return w.length === 3 && Math.abs(w[0] - w[1]) < 1 && Math.abs(w[1] - w[2]) < 1; }],
-         ['gap is 10px', function (c) { return c.columnGap === '10px'; }]] }
-];
+var C = window.PRACTICE_DRILLS;
 
 var solved = [];
 try { solved = JSON.parse(localStorage.getItem('csslab-practice')) || []; } catch (e) {}
@@ -171,7 +61,7 @@ function updateCount() { count.textContent = solved.length + ' / ' + C.length + 
 C.forEach(function (d, i) {
   var card = el('section', 'card chal');
   card.id = 'drill-' + (i + 1);
-  card.appendChild(el('h3', '', (i + 1) + '. ' + d.t));
+  card.appendChild(el('h2', '', (i + 1) + '. ' + d.t));
   card.appendChild(el('p', '', d.task));
 
   var grid = el('div', 'chal_grid');

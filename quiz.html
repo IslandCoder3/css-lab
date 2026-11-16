@@ -44,6 +44,7 @@
 
 <script src="script.js"></script>
 <script src="project.js"></script>
+<script src="search.js"></script>
 <script src="quiz-data.js"></script>
 <script>
 var Q = window.QUIZ_Q;
@@ -55,7 +56,7 @@ function show() {
   if (i >= Q.length) return finish();
   var q = Q[i];
 
-  var h = document.createElement('h3');
+  var h = document.createElement('h2');
   h.textContent = (i + 1) + '/' + Q.length + '. ' + q[0];
   box.appendChild(h);
 

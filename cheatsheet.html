@@ -48,50 +48,10 @@
 
 <script src="script.js"></script>
 <script src="project.js"></script>
+<script src="search.js"></script>
+<script src="cheat-data.js"></script>
 <script>
-var R = [
-  `three ways to apply CSS|Inline, internal (<style>) or external (.css file)|<link rel="stylesheet" href="style.css">|l1`,
-  `color formats|Name, hex, RGB or RGBA (a = opacity)|color: rgba(255, 0, 0, 0.5);|l2`,
-  `background shorthand|Image, repeat, position and color in one|background: url('images/bg.jpg') no-repeat center top #000;|l3`,
-  `font shorthand|The last value is the font-family|font: italic 700 20px Georgia, serif;|l7`,
-  `width / height|px is fixed, % follows the parent|width: 47%;|l4`,
-  `box-sizing reset|Template reset: include padding and border in the width|*, *:before, *:after { box-sizing: border-box; }|l25`,
-  `padding shorthand|4 values: top right bottom left|padding: 20px 15px 0;|l5`,
-  `margin / centering|Space outside; auto centers a block with a width|margin: 0 auto;|l6`,
-  `inline-block boxes|Always add vertical-align: top and a width|display: inline-block; vertical-align: top; width: 32%;|l8`,
-  `balanced widths|2 boxes 47%, 3 boxes 32%, 4 boxes 24%|width: 24%;|l8`,
-  `display: none|Makes the element invisible|display: none;|l8`,
-  `flex row|Parent lines children up and wraps them|display: flex; flex-wrap: wrap; justify-content: center; row-gap: 30px;|l9`,
-  `float|Left or right; reset with none|float: left; (reset: float: none;)|l10`,
-  `clearfix|Makes a parent contain its floats|.clearfix:before, .clearfix:after { content: ""; display: table; clear: both; }|l10`,
-  `:before icon recipe|Relative parent, absolute pseudo-element|h2 { position: relative; padding-top: 70px; } h2:before { content: ""; position: absolute; top: 0; left: 0; right: 0; margin: 0 auto; width: 57px; height: 57px; }|l11`,
-  `pseudo-classes|nth-child, first-child, last-child, hover, ::placeholder|li:nth-child(odd) { background: #eee; }|l12`,
-  `position|relative = parent of absolute; absolute floats|position: absolute; top: 0; left: 0;|l13`,
-  `center an absolute box|Horizontal and vertical recipes|left: 0; right: 0; margin: 0 auto; (vertical: top: 50%; transform: translateY(-50%);)|l13`,
-  `z-index|Front or back, positioned elements only|z-index: 10;|l14`,
-  `attribute selector|Class contains a value|[class*="mid_box"] { width: 32%; }|l15`,
-  `text-transform / word-wrap|Capitalize text; break long words|text-transform: uppercase; word-wrap: break-word;|l17`,
-  `border-radius|Round corners (50% = circle)|border-radius: 50%;|l17`,
-  `gradients|Generated background images|background-image: linear-gradient(90deg, #f6d365, #fda085);|l16`,
-  `table|Rows (tr), header cells (th), data cells (td)|<table><tr><th>Name</th></tr><tr><td>Ana</td></tr></table>|l29`,
-  `video & audio|Players with controls; list the source files|<video controls><source src="clip.mp4" type="video/mp4"></video>|l30`,
-  `figure|An image with a caption|<figure><img src="a.jpg" alt="..."><figcaption>Caption</figcaption></figure>|l30`,
-  `semantic tags|header, nav, main, section, article, aside, footer|<header>...</header> <nav>...</nav> <main>...</main> <footer>...</footer>|l31`,
-  `page skeleton|Every HTML page has the same parts|<!DOCTYPE html><html><head><title>My page</title></head><body>...</body></html>|l18`,
-  `headings & paragraphs|h1 is the main title, p is a paragraph|<h1>Title</h1> <p>Some text.</p>|l19`,
-  `link|Goes to another page|<a href="https://example.com">Link text</a>|l20`,
-  `image|Needs src and alt|<img src="photo.jpg" alt="Describe the photo">|l20`,
-  `lists|ul = bullets, ol = numbers, li = each item|<ul><li>One</li><li>Two</li></ul>|l21`,
-  `form fields|Input, textarea, select and button|<input type="email" placeholder="you@example.com">|l22`,
-  `class and id|class can repeat, id must be unique|<p class="note" id="intro">Text</p>|l23`,
-  `units|px fixed, % parent, rem root font, vw screen width|font-size: 1.25rem; width: 50vw;|l24`,
-  `border|Width, style and color|border: 2px solid #333; border-radius: 8px;|l25`,
-  `grid|Rows and columns on the parent|display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;|l26`,
-  `:hover|Style while the pointer is over it|a:hover { color: #db2777; }|l27`,
-  `transition|Animate the change (put it on the normal state)|transition: all .3s ease;|l27`,
-  `viewport meta|Needed for responsive pages|<meta name="viewport" content="width=device-width, initial-scale=1">|l28`,
-  `media query|Rules only for some screen sizes|@media (max-width: 600px) { .cards { flex-direction: column; } }|l28`
-];
+var R = window.CHEAT_ROWS;
 
 var tbody = document.querySelector('tbody');
 R.forEach(function (r) {
@@ -117,12 +77,16 @@ R.forEach(function (r) {
   tbody.appendChild(tr);
 });
 
+// the site search can open this page with ?q=term already filled in
+var q0 = new URLSearchParams(location.search).get('q');
+if (q0) document.getElementById('search').value = q0;
 document.getElementById('search').addEventListener('input', function () {
   var q = this.value.toLowerCase();
   tbody.querySelectorAll('tr').forEach(function (tr) {
     tr.hidden = tr.textContent.toLowerCase().indexOf(q) === -1;
   });
 });
+if (q0) document.getElementById('search').dispatchEvent(new Event('input'));
 </script>
 </body>
 </html>

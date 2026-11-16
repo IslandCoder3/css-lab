@@ -40,7 +40,7 @@
     <section class="card cap_step" id="stepcard"></section>
 
     <section class="card cap_prevcard">
-      <h3>Live preview</h3>
+      <h2>Live preview</h2>
       <div class="cap_prev" id="prev"><iframe id="frame" title="Page preview" scrolling="no" tabindex="-1"></iframe></div>
       <div class="insp" id="insp">Tap any part of the preview to see its class and CSS.</div>
       <details class="structure">
@@ -60,7 +60,7 @@ footer &gt; .wrapper &gt; p</pre>
     </section>
 
     <section class="card cap_edit">
-      <h3>Your CSS</h3>
+      <h2>Your CSS</h2>
       <div id="tokenslot"></div>
       <textarea id="css" class="cap_css" spellcheck="false" autocapitalize="off" autocorrect="off" aria-label="Your CSS"></textarea>
       <div class="chal_actions">
@@ -81,6 +81,7 @@ footer &gt; .wrapper &gt; p</pre>
 
 <script src="script.js"></script>
 <script src="project.js"></script>
+<script src="search.js"></script>
 <script>
 var RESET = `*,*:before,*:after{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;font-size:18px;line-height:22px;color:#333}
@@ -205,7 +206,7 @@ function renderCard() {
   var s = STEPS[cur], ok = results[cur];
   card.textContent = '';
   card.appendChild(el('span', 'step_chip', 'Step ' + (cur + 1) + ' of ' + STEPS.length));
-  card.appendChild(el('h3', '', s.t));
+  card.appendChild(el('h2', '', s.t));
   card.appendChild(el('p', 'goal', s.goal));
   var tg = el('p', 'target');
   tg.appendChild(document.createTextNode('Style this: '));

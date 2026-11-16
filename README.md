@@ -26,6 +26,7 @@ The site is data-driven rather than hand-built page by page: lesson demos are wi
 - Review mode that collects the lesson check questions, quiz questions and game blanks you missed, plus practice drills you have not passed, and clears them as you get them right
 - Live responsive-design demo: a real page in a frame that switches layout as you change the screen width
 - 20-question quiz with a saved best score, and a searchable cheatsheet that links back to each lesson
+- Site-wide search (press / or Ctrl+K, or use the Search button): finds lessons, cheatsheet entries, practice drills and game levels, and understands common spellings like flexbox and colour
 - Progress saved locally per device, with a reset option
 - Dark/light theme toggle and a responsive layout built for mobile as well as desktop
 

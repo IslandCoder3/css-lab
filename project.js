@@ -448,6 +448,17 @@
     fitRes();
   }
 
+  // Briefly highlight the lesson you jumped to (search results, sidebar, links from other pages)
+  function flash(id) {
+    var t = document.getElementById(id);
+    if (!t || !t.classList.contains('lesson')) return;
+    t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash');
+    setTimeout(function () { t.classList.remove('flash'); }, 2000);
+  }
+  window.CSSLAB.flash = flash;
+  window.addEventListener('hashchange', function () { flash(location.hash.slice(1)); });
+  if (location.hash) setTimeout(function () { flash(location.hash.slice(1)); }, 500);
+
   // Keep the current lesson visible inside the sidebar's own scrolling list (never scrolls the page)
   function keepInView(a) {
     var ol = side.querySelector('ol'), r = a.getBoundingClientRect(), o = ol.getBoundingClientRect();
